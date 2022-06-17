@@ -1,1 +1,1 @@
-# solinda_odooUAT
+# GLS_Odoo5_Prototype
