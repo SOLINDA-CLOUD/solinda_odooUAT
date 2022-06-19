@@ -66,10 +66,11 @@ class PaymentSchedule(models.Model):
             if self.order_id.deduct_dp:
                 if self.payment_type == 'termin':                
                     seq = 10
+                    data_payment = []
                     for payment in self.order_id.payment_schedule_line_ids:
                         if payment.id != self.id:
                             if payment.move_id:
-                                invoice_vals['invoice_line_ids'] = [(0,0,{
+                                data_payment.append((0,0,{
                                 'sequence': seq + 10,
                                 'name': payment.name,
                                 'account_id': payment.account_id.id,
@@ -77,11 +78,11 @@ class PaymentSchedule(models.Model):
                                 'price_unit': -payment.total_amount,
                                 'analytic_account_id': self.order_id.analytic_account_id.id,
                                 'payment_schedule_ids': [(4, payment.id)]
-                            })]
+                            }))
                             else:
                                 raise ValidationError("Cannot Processed because a payment schedule %s hasn't made an invoice yet"%payment.name)
                         else:
-                            invoice_vals['invoice_line_ids'] = [(0,0,{
+                            data_payment.append((0,0,{
                             'sequence': 10,
                             'name': self.name,
                             'account_id': self.account_id.id,
@@ -89,8 +90,9 @@ class PaymentSchedule(models.Model):
                             'price_unit': self.total_amount,
                             'analytic_account_id': self.order_id.analytic_account_id.id,
                             'payment_schedule_ids': [(4, self.id)]
-                            })]
+                            }))
                             break                
+                    invoice_vals['invoice_line_ids'] = data_payment
                     moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
                 else:
                     invoice_vals['invoice_line_ids'] = [(0,0,{
