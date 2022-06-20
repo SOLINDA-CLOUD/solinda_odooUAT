@@ -168,7 +168,7 @@ class CostSheet(models.Model):
     @api.depends('sales','project_value','category_line_ids.price','category_line_ids.final_price_percentage','project_value','sales')
     def _compute_profit(self):
         for this in self:
-            this.profit = this.project_value + this.sales
+            this.profit =  this.sales - this.project_value
     
     @api.depends('subtotal','subtotal_non_project')
     def _compute_project_value(self):
