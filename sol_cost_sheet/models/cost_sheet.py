@@ -120,6 +120,8 @@ class CostSheet(models.Model):
         self.write({'state':'submit'})
     def action_done(self):
         self.write({'state':'approved'})
+    def action_reject(self):
+        self.write({'state':'reject'})
     def action_to_draft(self):
         self.write({'state':'draft'})
     

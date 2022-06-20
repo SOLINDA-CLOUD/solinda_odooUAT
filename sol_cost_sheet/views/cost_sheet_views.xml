@@ -21,6 +21,7 @@
           <header>
             <button string="Submit" name="action_submit" states="draft" type="object" class="oe_highlight"/>
             <button string="Approve" name="action_done" states="submit" type="object" class="oe_highlight"/>
+            <button string="Reject" name="action_reject" states="approved" type="object" class="oe_highlight"/>
             <button string="Set to Draft" name="action_to_draft" states="done" type="object"/>
 
             <button string="Create Revision" name="create_revision" states="approved" type="object"/>
