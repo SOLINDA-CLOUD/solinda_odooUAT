@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- <report string="Quotation - Turnkey" id="action_report_quotation_turnkey" model="sale.order" report_type="qweb-pdf" name="gls_reporting.report_quotation_turnkey" file="gls_reporting.report_quotation_turnkey" print_report_name="'Quotation Turnkey - %s' % (object.name)" /> -->
 
-    <template id="gls_reportingexternal_layout_standard_printout">
+
+    <template id="gls_reporting.external_layout_standard_printout">
         <div class="header">
             <div class="col-xs-2">
+                <t t-set="company" t-value="res_company"></t>
                 <image src="/ati_srf_report/static/src/img/logo2.png" style="display: inline;width: 120px;height: 75px;"/>
                 <!-- <h3>PT. SRI REJEKI FERTILIZER</h3> -->
             </div>
@@ -34,10 +37,12 @@
             <div class="page">
                 <t t-foreach="docs" t-as="doc">
                     <header>
+                        <t t-set="company" t-value="res_company"></t>
                         <div class="row">
                             <div class="col-xs-2">
+
                                 <!-- <image src="/gls_reporting/static/src/img/gls_logo.png" style="display: inline;width: 225px;height: 125px;"/> -->
-                                <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="max-height: 125px;" alt="Logo"/>
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 125px;" alt="Logo"/>
                             </div>
                             <div class="col-xs-2">
 
@@ -58,23 +63,31 @@
                     </h5>
                     <table style="table-layout: fixed; border-collapse: collapse; width: 100%; height: 144px;">
                         <tbody style="font-size: 15px;">
-                            <tr style="height: 18px;">
+                            <tr style="height: 18px; ">
                                 <td style="width: 9.51851%; height: 18px;">To</td>
                                 <td style="width: 1.97972%; height: 18px;">:</td>
-                                <td style="width: 38.1214%; height: 18px;">PT. Drupadi Tirta Gresik</td>
+                                <td style="width: 38.1214%; height: 18px;">
+                                    <t t-esc="doc.partner_id.name"/>
+                                </td>
                                 <td style="width: 8.52077%; height: 18px;"></td>
                                 <td style="width: 7.85545%; height: 18px;">Date</td>
                                 <td style="width: 1.97975%; height: 18px;">:</td>
-                                <td style="width: 32.0241%; height: 18px;">Mar 11th, 2022</td>
+                                <td style="width: 32.0241%; height: 18px;">
+                                    <t t-esc="datetime.date.today().strftime('%b %d, %Y')"/>
+                                </td>
                             </tr>
                             <tr style="height: 36px;">
                                 <td style="width: 9.51851%; height: 36px;">Address</td>
                                 <td style="width: 1.97972%; height: 36px;">:</td>
-                                <td style="width: 38.1214%; height: 36px;">Menara Karya Lt.27 Unit A-H Jl. H.R Rasuna Said Blok X-5 Kav.1-2 Kuningan Timur, Jakarta Selatan</td>
+                                <td style="width: 38.1214%; height: 36px;">
+                                    <t t-esc="doc.partner_id.street"/>
+                                </td>
                                 <td style="width: 8.52077%; height: 36px;"></td>
                                 <td style="width: 7.85545%; height: 36px;">From</td>
                                 <td style="width: 1.97975%; height: 36px;">:</td>
-                                <td style="width: 32.0241%; height: 36px;">PT. Gapura Liqua Solutions</td>
+                                <td style="width: 32.0241%; height: 36px;">
+                                    <t t-esc="company.name"/>
+                                </td>
                             </tr>
                             <tr style="height: 18px;">
                                 <td style="width: 9.51851%; height: 18px;">Attn</td>
@@ -83,7 +96,9 @@
                                 <td style="width: 8.52077%; height: 18px;"></td>
                                 <td style="width: 7.85545%; height: 18px;">Ref</td>
                                 <td style="width: 1.97975%; height: 18px;">:</td>
-                                <td style="width: 32.0241%; height: 18px;">007/GLS/QUO/III/22</td>
+                                <td style="width: 32.0241%; height: 18px;">
+                                    <t t-esc="doc.name"/>
+                                </td>
                             </tr>
                             <tr style="height: 36px;">
                                 <td style="width: 9.51851%; height: 36px;">Telp</td>
@@ -141,25 +156,68 @@
                                                 <strong>Quantity</strong>
                                             </td>
                                             <td style="width: 20%; text-align: center; height: 20px; border: 1px solid black; padding-top:7px;">
-                                                <strong>Unit Price (IDR)</strong>
+                                                <strong>Unit Price</strong>
                                             </td>
                                             <td style="width: 20%; text-align: center; height: 20px; border: 1px solid black; padding-top:7px;">
-                                                <strong>Amount (IDR)</strong>
+                                                <strong>Amount</strong>
                                             </td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr style="height: 20px;">
-                                            <td style="width: 4.18709%; height: 20px; text-align: center; border: 1px solid black;">1</td>
+                                            <td style="width: 4.18709%; height: 20px; text-align: center; border: 1px solid black;"></td>
                                             <td style="width: 39.5991%; height: 20px; border: 1px solid black; padding-left:5px;">
-                                                <strong>Kit Valve/diaph.</strong>
+                                                <strong>
+                                                    <t t-esc="doc.crm_id.name"/>
+                                                </strong>
                                             </td>
-                                            <td style="width: 16.2138%; height: 20px; text-align: center; border: 1px solid black;">3 unit</td>
-                                            <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-right:3px;">6.265.000,-</td>
+                                            <td style="width: 16.2138%; height: 20px; text-align: center; border: 1px solid black;"></td>
+                                            <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-right:3px;"></td>
                                             <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-right:3px;">
-                                                <strong>18.795.000,-</strong>
                                             </td>
                                         </tr>
+
+                                        <t t-set="no" t-value="1"/>
+
+                                        <t t-foreach="doc.category_line_ids" t-as="category">
+                                            <tr style="height: 20px;">
+                                                <td style="width: 4.18709%; height: 20px; text-align: center; border: 1px solid black;">
+                                                    <t t-esc="no"/>
+                                                </td>
+                                                <td style="width: 39.5991%; height: 20px; border: 1px solid black; padding-left:5px;">
+                                                    <strong>
+                                                        <t t-esc="category.product_id.display_name"/>
+                                                    </strong>
+                                                </td>
+                                                <td style="width: 16.2138%; height: 20px; text-align: center; border: 1px solid black;"></td>
+                                                <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-right:3px;">
+                                                    <t t-esc="category.final_price"/>
+
+                                                </td>
+                                                <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-right:3px;">
+                                                    <strong>
+                                                        <t t-esc="category.final_price"/>
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                            <t t-set="no" t-value="no + 1"/>
+                                            <t t-if="category.parent_component_line_ids">
+                                                <tr style="height: 20px;" t-foreach="category.parent_component_line_ids" t-as="component">
+                                                    <td style="width: 4.18709%; height: 20px; text-align: center; border: 1px solid black;"></td>
+                                                    <td style="width: 39.5991%; height: 20px; border: 1px solid black; padding-left:5px;">
+                                                        <t t-esc="component.product_id.display_name"/>
+                                                    </td>
+                                                    <td style="width: 16.2138%; height: 20px; text-align: center; border: 1px solid black;">
+                                                        <t t-esc="component.product_qty"/>
+
+                                                    </td>
+                                                    <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-right:3px;"></td>
+                                                    <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-right:3px;">
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+
                                         <tr style="height: 20px;">
                                             <td style="width: 4.18709%; height: 20px; text-align: right; border: 1px solid black; padding-top:7px; padding-right:5px;" colspan="4">
                                                 <strong>Total Price</strong>
@@ -179,78 +237,79 @@
                                         <u>Terms and Conditions:</u>
                                     </strong>
                                     <br/>
-                                    <p>
+                                    <p>Quotation Validity : <t t-esc="doc.quotation_validity"/>
+                                    </p>
+                                    <p>Delivery time : <t t-esc="doc.delivery_time"/>
+                                    </p>
+                                    <p>Deliver Point : <t t-esc="doc.delivery_point"/>
+                                    </p>
+                                    <p>Price : <t t-raw="doc.toc_price"/>
+                                    </p>
+                                    <p>Payment Terms : <t t-raw="doc.payment_terms"/>
+                                    </p>
+                                    <!-- <p>
                                         
                                         - Quotation Validity : 2 Weeks<br/>
                                         - Delivery time : 10 weeks after PO Received<br/>
                                         - Deliver Point : PT. Drupadi Tirta Gresik<br/>
                                         - Price : Exclude all Goverment Taxes<br/>
                                         - Payment Terms : 30 days after goods received<br/>
-                    </p>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align: left; width: 99.9997%;" colspan="7">For further information, please do not hesitate to contact us.</td>
-        </tr>
-        <tr>
-            <td style="text-align: left; width: 99.9997%; padding-top:100px;" colspan="7"></td>
-        </tr>
-        <tr>
-            <td style="text-align: center; width: 49.6196%;" colspan="3">Best Regards,<br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <span style="text-decoration: underline;">
-                <strong>(I Ketut Wiguna)<br />
-                </strong>
-            </span>President Director</td>
-        <td style="text-align: center; width: 8.52077%;"></td>
-        <td style="text-align: center; width: 41.8592%;" colspan="3">Received by,<br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <span style="text-decoration: underline;">
-            <strong>(....................................)                <br />
-            </strong>
-        </span>......................................
-    </td>
-</tr>
-</tbody>
-</table>
+                    </p> -->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 99.9997%;" colspan="7">For further information, please do not hesitate to contact us.</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 99.9997%; padding-top:100px;" colspan="7"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center; width: 49.6196%;" colspan="3">Best Regards,<br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <span style="text-decoration: underline;">
+                                <strong>(I Ketut Wiguna)<br />
+                                </strong>
+                            </span>President Director</td>
+                        <td style="text-align: center; width: 8.52077%;"></td>
+                        <td style="text-align: center; width: 41.8592%;" colspan="3">Received by,<br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <span style="text-decoration: underline;">
+                            <strong>(....................................)                                <br />
+                            </strong>
+                        </span>......................................
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-<div class="footer o_standard_footer">
-<div class="text-center" style="font-size : 10px important!; opacity:0.25;">
-<div style="font-size : 10px important!;">
-    <strong>PT. GAPURA LIQUA SOLUTIONS</strong>
-    <br/>
+        <div class="footer o_standard_footer">
+            <div class="text-center" style="font-size : 10px important!; opacity:0.25;">
+                <div style="font-size : 10px important!;">
+                    <strong>PT. GAPURA LIQUA SOLUTIONS</strong>
+                    <br/>
                                 Jl Cihampelas No. 214A, Bandung 40131, West Java, Indonesia
-</div>
-<ul class="list-inline mb4">
-    <li t-if="doc.company_id.phone" class="list-inline-item">p. <span t-field="doc.company_id.phone"/>
-    </li>
-    <li t-if="doc.company_id.phone" class="list-inline-item">f. <span t-field="doc.company_id.phone"/>
-    </li>
-    <li t-if="doc.company_id.email" class="list-inline-item">e. <span t-field="doc.company_id.email"/>
-    </li>
-    <li t-if="doc.company_id.website" class="list-inline-item">
-        <span t-field="doc.company_id.website"/>
-    </li>
-    <li t-if="doc.company_id.vat" class="list-inline-item">
-        <t t-esc="(doc.company_id.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
-:        <span t-esc="company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
-    </li>
-</ul>
-<div name="financial_infos">
-    <span t-field="doc.company_id.report_footer"/>
-</div>
-</div>
-</div>
-</t>
+                </div>
+                <ul class="list-inline mb4">
+                    <li class="list-inline-item">p. +62 22 2035 280</li>
+                    <li class="list-inline-item">f. +62 22 2035 290</li>
+                    <li class="list-inline-item">e. info@gapuraliquasolutions.com</li>
+                    <li class="list-inline-item">www.gapuraliquasolutions.com</li>
+                </ul>
+                <!-- <div name="financial_infos">
+                                <span t-field="doc.company_id.report_footer"/>
+                            </div> -->
+            </div>
+        </div>
+    </t>
 </div>
 </t>
 </template>

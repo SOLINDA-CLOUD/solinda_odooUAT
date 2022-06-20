@@ -53,13 +53,13 @@
         </record>
         <record id="report_quotation_turnkey" model="ir.actions.report">
             <field name="name">Quotation - Turnkey</field>
-            <field name="model">sale.order</field>
+            <field name="model">cost.sheet</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">gls_reporting.report_quotation_turnkey</field>
             <field name="report_file">gls_reporting.report_quotation_turnkey</field>
-            <field name="paperformat_id" ref="gls_reporting.report_paperformat_a4_portrait_quotation_gls" />
+            <!-- <field name="paperformat_id" ref="gls_reporting.report_paperformat_a4_portrait_quotation_gls" /> -->
             <field name="print_report_name">'Turnkey - %s' % object.name</field>
-            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sol_cost_sheet.model_cost_sheet"/>
             <field name="binding_type">report</field>
         </record>
 

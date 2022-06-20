@@ -180,6 +180,24 @@
                 </field>
               </page>
 
+              <page string="Additional Information">
+                <group string="Information">
+                  <field name="subject" />
+                  <field name="attn_id" />
+                  <field name="phone" />
+                  <field name="email" />
+
+                </group>
+                <group string="Terms And Conditions">
+                  <field name="quotation_validity" />
+                  <field name="delivery_time" />
+                  <field name="delivery_point" />
+                  <field name="toc_price" />
+                  <field name="payment_terms" />
+
+                </group>
+              </page>
+
             </notebook>
 
           </sheet>

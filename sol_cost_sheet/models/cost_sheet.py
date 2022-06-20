@@ -1,4 +1,5 @@
 import copy
+import email
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_round
@@ -71,6 +72,22 @@ class CostSheet(models.Model):
     final_profit_percent = fields.Float('Final Profit %',compute="_compute_total_amount",store=True,copy=True)
     taxes = fields.Float('Vat',compute="_compute_total_amount",store=True,copy=True)
     total_amount = fields.Float(compute='_compute_total_amount', string='Total Amount',store=True,copy=True)
+    
+    # Other Information
+    subject = fields.Char()
+    attn_id = fields.Many2one('res.partner', string='Attn')
+    phone = fields.Char(related='attn_id.phone', store=True)
+    email = fields.Char(related='attn_id.email', store=True)
+    
+    # Terms and Conditions
+    quotation_validity = fields.Char('Quotation Validity')
+    delivery_time = fields.Char('Delivery Time')
+    delivery_point = fields.Char('Delivery Point')
+    toc_price = fields.Html('Price')
+    payment_terms = fields.Html('Payment Terms')
+    
+    
+    
     
         
     @api.model
