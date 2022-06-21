@@ -91,6 +91,9 @@ class CostSheet(models.Model):
     def action_print_quotation(self):
         return self.env.ref('sol_cost_sheet.report_quotation_turnkey_action').report_action(self)
     
+    def action_print_quotation_trading(self):
+        return self.env.ref('sol_cost_sheet.report_quotation_trading_action').report_action(self)
+    
     
     
         
