@@ -24,6 +24,7 @@
             <button string="Reject" name="action_reject" states="approved" type="object" class="oe_highlight"/>
             <button string="Set to Draft" name="action_to_draft" states="done" type="object"/>
 
+            <button string="Print Quotation" name="action_print_quotation" states="approved" type="object"/>
             <button string="Create Revision" name="create_revision" states="approved" type="object"/>
             <field name="state" widget="statusbar" statusbar_visible="draft,submit,approved" />
           </header>
