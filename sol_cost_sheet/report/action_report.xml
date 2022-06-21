@@ -23,8 +23,8 @@
             <field name="name">Quotation - Turnkey</field>
             <field name="model">cost.sheet</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">gls_reporting.report_quotation_turnkey</field>
-            <field name="report_file">gls_reporting.report_quotation_turnkey</field>
+            <field name="report_name">sol_cost_sheet.report_quotation_turnkey</field>
+            <field name="report_file">sol_cost_sheet.report_quotation_turnkey</field>
             <!-- <field name="paperformat_id" ref="gls_reporting.report_paperformat_a4_portrait_quotation_gls" /> -->
             <field name="print_report_name">'Turnkey - %s' % object.name</field>
         </record>
