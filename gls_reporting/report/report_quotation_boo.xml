@@ -61,20 +61,28 @@
                             <tr style="height: 18px;">
                                 <td style="width: 9.51851%; height: 18px;">To</td>
                                 <td style="width: 1.97972%; height: 18px;">:</td>
-                                <td style="width: 38.1214%; height: 18px;">PT. Drupadi Tirta Gresik</td>
+                                <td style="width: 38.1214%; height: 18px;">
+                                    <t t-esc="doc.partner_id.name"/>
+                                </td>
                                 <td style="width: 8.52077%; height: 18px;"></td>
                                 <td style="width: 7.85545%; height: 18px;">Date</td>
                                 <td style="width: 1.97975%; height: 18px;">:</td>
-                                <td style="width: 32.0241%; height: 18px;">Mar 11th, 2022</td>
+                                <td style="width: 32.0241%; height: 18px;">
+                                    <t t-esc="datetime.date.today().strftime('%b %d, %Y')"/>
+                                </td>
                             </tr>
                             <tr style="height: 36px;">
                                 <td style="width: 9.51851%; height: 36px;">Address</td>
                                 <td style="width: 1.97972%; height: 36px;">:</td>
-                                <td style="width: 38.1214%; height: 36px;">Menara Karya Lt.27 Unit A-H Jl. H.R Rasuna Said Blok X-5 Kav.1-2 Kuningan Timur, Jakarta Selatan</td>
+                                <td style="width: 38.1214%; height: 36px;">
+                                    <t t-esc="doc.partner_id.street"/>
+                                </td>
                                 <td style="width: 8.52077%; height: 36px;"></td>
                                 <td style="width: 7.85545%; height: 36px;">From</td>
                                 <td style="width: 1.97975%; height: 36px;">:</td>
-                                <td style="width: 32.0241%; height: 36px;">PT. Gapura Liqua Solutions</td>
+                                <td style="width: 32.0241%; height: 36px;">
+                                    <t t-esc="company.name"/>
+                                </td>
                             </tr>
                             <tr style="height: 18px;">
                                 <td style="width: 9.51851%; height: 18px;">Attn</td>
@@ -83,10 +91,12 @@
                                 <td style="width: 8.52077%; height: 18px;"></td>
                                 <td style="width: 7.85545%; height: 18px;">Ref</td>
                                 <td style="width: 1.97975%; height: 18px;">:</td>
-                                <td style="width: 32.0241%; height: 18px;">007/GLS/QUO/III/22</td>
+                                <td style="width: 32.0241%; height: 18px;">
+                                    <t t-esc="doc.name"/>
+                                </td>
                             </tr>
                             <tr style="height: 36px;">
-                                <td style="width: 9.51851%; height: 36px;">email</td>
+                                <td style="width: 9.51851%; height: 36px;">Email</td>
                                 <td style="width: 1.97972%; height: 36px;">:</td>
                                 <td style="width: 38.1214%; height: 36px;">
                                     <a href="mailto:admin@porcurement.awg@adaro.com">admin@porcurement.awg@adaro.com</a>

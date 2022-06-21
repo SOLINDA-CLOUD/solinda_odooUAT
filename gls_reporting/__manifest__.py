@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale','sol_cost_sheet'],
+    'depends': ['base','sale'],
 
     # always loaded
     'data': [
@@ -31,7 +31,7 @@
         'report/report_quotation_boo.xml',
         'report/report_quotation_oms.xml',
         'report/report_quotation_trading.xml',
-        'report/report_quotation_turnkey.xml',
+        # 'report/report_quotation_turnkey.xml',
     ],
     'license': 'LGPL-3'
     
