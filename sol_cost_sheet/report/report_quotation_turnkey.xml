@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="gls_reporting.external_layout_standard_printout">
+    <template id="external_layout_standard_printout_gls">
         <div class="header">
             <div class="col-xs-2">
                 <t t-set="company" t-value="res_company"></t>
