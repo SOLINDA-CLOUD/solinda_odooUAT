@@ -40,6 +40,8 @@ class ProjectProject(models.Model):
                     })
         
         self.write({'rap_id':rap.id})
+        self.rab_id.ga_project_line_ids.write({'rap_id':rap.id})
+        self.rab_id.waranty_line_ids.write({'rap_id':rap.id})
         # self.rap_id = rap.id
         
         return {

@@ -92,6 +92,7 @@ class CostSheet(models.Model):
         return self.env.ref('sol_cost_sheet.report_quotation_turnkey_action').report_action(self)
     
     
+    
         
     @api.model
     def create(self, vals):
@@ -348,11 +349,14 @@ class GaProject(models.Model):
     _description = 'Ga Project'
     
     cost_sheet_id = fields.Many2one('cost.sheet', string='Cost Sheet',ondelete="cascade")
+    rap_id = fields.Many2one('cost.sheet', string='Cost Sheet',ondelete="cascade")
     product_id = fields.Many2one('product.product',required=True)    
     product_qty = fields.Integer('Quantity')
     existing_price = fields.Float('Existing Price')
     rfq_price = fields.Float('RFQ Price')
     total_price = fields.Float(compute='_compute_total_price', string='Total Price',store=True)
+    rap_price = fields.Float('RAP Price')
+    
     remarks = fields.Text('Remarks')
     
     @api.depends('product_qty','rfq_price')
@@ -366,12 +370,15 @@ class WarantyWaranty(models.Model):
     _description = 'Waranty'
     
     cost_sheet_id = fields.Many2one('cost.sheet', string='Cost Sheet',ondelete="cascade")
+    rap_id = fields.Many2one('cost.sheet', string='Cost Sheet',ondelete="cascade")
+    
     product_id = fields.Many2one('product.product',required=True)    
     product_qty = fields.Integer('Quantity')
     existing_price = fields.Float('Existing Price')
     rfq_price = fields.Float('RFQ Price')
     total_price = fields.Float(compute='_compute_total_price', string='Total Price',store=True)
     remarks = fields.Text('Remarks')
+    rap_price = fields.Float('RAP Price')
 
     
     @api.depends('product_qty','rfq_price')

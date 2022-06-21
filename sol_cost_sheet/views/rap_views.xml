@@ -75,6 +75,34 @@
                                     <div class="oe_clear"/>
                                 </group>
                             </page>
+                            <page name="ga_project" string="GA Project">
+                                <field name="ga_project_line_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id" required="1" />
+                                        <field name="product_qty" />
+                                        <field name="existing_price" />
+                                        <field name="rfq_price" />
+                                        <field name="total_price" />
+                                        <field name="remarks" />
+
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page name="waranty" string="Waranty">
+                                <field name="waranty_line_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id" required="1" />
+                                        <field name="product_qty" />
+                                        <field name="existing_price" />
+                                        <field name="rfq_price" />
+                                        <field name="total_price" />
+                                        <field name="remarks" />
+
+                                    </tree>
+                                </field>
+                            </page>
+
                         </notebook>
                     </sheet>
                     <div class="oe_chatter">

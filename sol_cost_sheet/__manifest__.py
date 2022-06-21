@@ -39,6 +39,7 @@
         'views/sequence_data.xml',
         'views/templates.xml',
         'report/report_quotation_turnkey.xml',
+        'report/report_quotation_trading.xml',
         'report/action_report.xml',
     ],
     # only loaded in demonstration mode

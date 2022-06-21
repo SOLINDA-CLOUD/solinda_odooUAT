@@ -244,7 +244,7 @@
                                                 </td>
                                                 <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-top:7px; padding-right:5px;">
                                                     <strong>
-                                                        <t t-esc="sum(doc.category_line_ids.mapped('final_price'))" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                        <t t-esc="doc.total_cost_round_up + doc.taxes" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                                     </strong>
                                                 </td>
                                             </tr>
@@ -368,20 +368,32 @@ p {
 
             <div class="footer o_standard_footer">
                 <div class="text-center" style="font-size : 10px important!; opacity:0.25;">
-                    <div style="font-size : 10px important!;">
-                        <strong>PT. GAPURA LIQUA SOLUTIONS</strong>
+                    <div>
+                        <strong>
+                            <span t-field="res_company.name"/>
+                        </strong>
                         <br/>
-                                Jl Cihampelas No. 214A, Bandung 40131, West Java, Indonesia
+                        <span t-field="res_company.street"/>
+                        <!-- Jl Cihampelas No. 214A, Bandung 40131, West Java, Indonesia -->
                     </div>
                     <ul class="list-inline mb4">
-                        <li class="list-inline-item">p. +62 22 2035 280</li>
-                        <li class="list-inline-item">f. +62 22 2035 290</li>
-                        <li class="list-inline-item">e. info@gapuraliquasolutions.com</li>
-                        <li class="list-inline-item">www.gapuraliquasolutions.com</li>
+                        <li t-if="res_company.phone" class="list-inline-item">p. <span t-field="res_company.phone"/>
+                        </li>
+                        <li t-if="res_company.phone" class="list-inline-item">f. <span t-field="res_company.phone"/>
+                        </li>
+                        <li t-if="res_company.email" class="list-inline-item">e. <span t-field="res_company.email"/>
+                        </li>
+                        <li t-if="res_company.website" class="list-inline-item">
+                            <span t-field="res_company.website"/>
+                        </li>
+                        <li t-if="res_company.vat" class="list-inline-item">
+                            <t t-esc="(res_company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
+:                            <span t-esc="company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                        </li>
                     </ul>
                     <!-- <div name="financial_infos">
-                                <span t-field="doc.company_id.report_footer"/>
-                            </div> -->
+                        <span t-field="res_company.report_footer"/>
+                    </div> -->
                 </div>
             </div>
         </t>
