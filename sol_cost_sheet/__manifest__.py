@@ -38,7 +38,7 @@
         'views/menuitem.xml',
         'views/sequence_data.xml',
         'views/templates.xml',
-        'views/report_quotation_turnkey.xml',
+        'report/report_quotation_turnkey.xml',
         'report/action_report.xml',
     ],
     # only loaded in demonstration mode
