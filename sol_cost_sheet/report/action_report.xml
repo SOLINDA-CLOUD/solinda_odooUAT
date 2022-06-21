@@ -2,8 +2,8 @@
 <odoo>
 
     <data>
-        <record id="report_paperformat_a4_portrait_quotation_gls" model="report.paperformat">
-            <field name="name">Paper Format Quotation GLS</field>
+        <record id="report_paperformat_a4_portrait_quotation_gls_turnkey" model="report.paperformat">
+            <field name="name">Paper Format Quotation GLS - Turnkey</field>
             <field name="default" eval="True"/>
             <field name="format">A4</field>
             <field name="page_height">0</field>
@@ -25,7 +25,7 @@
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">sol_cost_sheet.report_quotation_turnkey</field>
             <field name="report_file">sol_cost_sheet.report_quotation_turnkey</field>
-            <!-- <field name="paperformat_id" ref="gls_reporting.report_paperformat_a4_portrait_quotation_gls" /> -->
+            <field name="paperformat_id" ref="sol_cost_sheet.report_paperformat_a4_portrait_quotation_gls_turnkey" />
             <field name="print_report_name">'Turnkey - %s' % object.name</field>
         </record>
 

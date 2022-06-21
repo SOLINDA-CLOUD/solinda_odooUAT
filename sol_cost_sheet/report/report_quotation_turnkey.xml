@@ -40,7 +40,7 @@
                             <div class="col-xs-2">
 
                                 <!-- <image src="/gls_reporting/static/src/img/gls_logo.png" style="display: inline;width: 225px;height: 125px;"/> -->
-                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 125px;" alt="Logo"/>
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-width:100%; height:auto" alt="Logo"/>
                             </div>
                             <div class="col-xs-2">
 
@@ -243,7 +243,9 @@
                                                     <strong>Total Price</strong>
                                                 </td>
                                                 <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-top:7px; padding-right:5px;">
-                                                    <strong>18.795.000,-</strong>
+                                                    <strong>
+                                                        <t t-esc="sum(doc.category_line_ids.mapped('final_price'))" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                    </strong>
                                                 </td>
                                             </tr>
                                         </tbody>

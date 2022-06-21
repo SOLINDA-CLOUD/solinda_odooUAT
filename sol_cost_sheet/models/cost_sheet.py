@@ -12,7 +12,7 @@ class CostSheet(models.Model):
     
     name = fields.Char('Name',tracking=True)
     crm_id = fields.Many2one('crm.lead', string='CRM',required=True,tracking=True,copy=True)
-    partner_id = fields.Many2one('res.partner', string='Customer',copy=True)
+    partner_id = fields.Many2one('res.partner', string='Customer',copy=True,required=True)
     date_document = fields.Date('Request Date',tracking=True,default=fields.Date.today)
     user_id = fields.Many2one('res.users', string='Responsible',default=lambda self:self.env.user.id)
     # rab_template_id = fields.Many2one('rab.template', string='RAB Template',tracking=True,copy=True)
