@@ -15,6 +15,7 @@ class CsRAP(models.Model):
     note = fields.Text('Term and condition')
     approval_id = fields.Many2one('approval.approval', string='Approval')
     approver_id = fields.Many2one('approver.line', string='Approver')
+    partner_id = fields.Many2one('res.partner', string='Customer')
     state = fields.Selection([
         ('draft', 'Draft'),
         ('submit', 'Submited'),

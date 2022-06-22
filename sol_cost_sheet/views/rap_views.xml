@@ -45,6 +45,7 @@
                             <field name="user_id" readonly="1" />
                             <field name="project_id" readonly="1" />
                             <field name="reason" />
+                            <field name="partner_id" readonly="1" force_save="1"/>
                             <field name="approval_id" invisible="1" />
                             <field name="approver_id" invisible="1" />
                             <field name="is_approver" invisible="1" />

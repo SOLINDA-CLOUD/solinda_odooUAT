@@ -13,6 +13,7 @@ class ProjectProject(models.Model):
         
         rap = self.env['rap.rap'].create({
                 'date_document': fields.Date.today(),
+                'partner_id': self.rab_id.partner_id.id,
                 # 'crm_id': self.rab_id.crm_id.id,
                 'project_id': self.id,
                 'category_line_ids': [(0,0,{

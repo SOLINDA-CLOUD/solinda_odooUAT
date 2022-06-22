@@ -42,6 +42,27 @@
 
         </record>
 
+        <record id="export_rab_action" model="ir.actions.report">
+            <field name="name">Export RAB</field>
+            <field name="model">cost.sheet</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">sol_cost_sheet.report_cost_sheet_xlsx</field>
+            <field name="report_file">sol_cost_sheet.report_cost_sheet_xlsx</field>
+            <field name="print_report_name">'Export RAB - %s' % object.name</field>
+            <field name="binding_model_id" ref="sol_cost_sheet.model_cost_sheet"/>
+            <field name="binding_type">report</field>
+        </record>
+        <record id="export_rap_action" model="ir.actions.report">
+            <field name="name">Export RAP</field>
+            <field name="model">rap.rap</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">sol_cost_sheet.report_rap_xlsx</field>
+            <field name="report_file">sol_cost_sheet.report_rap_xlsx</field>
+            <field name="print_report_name">'Export RAP - %s' % object.name</field>
+            <field name="binding_model_id" ref="sol_cost_sheet.model_rap_rap"/>
+            <field name="binding_type">report</field>
+        </record>
+
 
 
 
