@@ -5,7 +5,7 @@ class PurchaseOrder(models.Model):
     
     def button_confirm(self):
         res = super(PurchaseOrder,self).button_confirm()
-        self.order_line.write({'po_confirm_date': fields.Date.context_today()})
+        self.order_line.write({'po_confirm_date': fields.Date.context_today(self) })
         return res        
 
 class PurchaseOrderLine(models.Model):
