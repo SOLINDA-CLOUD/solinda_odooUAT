@@ -20,7 +20,7 @@
 
         <record id="report_quotation_boo_action" model="ir.actions.report">
             <field name="name">Quotation - BOO</field>
-            <field name="model">sale.order</field>
+            <field name="model">crm.lead</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">gls_reporting.report_quotation_boo</field>
             <field name="report_file">gls_reporting.report_quotation_boo</field>
