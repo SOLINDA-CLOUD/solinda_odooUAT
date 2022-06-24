@@ -205,6 +205,9 @@
             </group>
           </page>
         </xpath>
+        <field name="tag_ids" position="before">
+          <field name="periode"/>
+        </field>
       </field>
     </record>
   </data>
