@@ -20,7 +20,7 @@ class SaleOrder(models.Model):
     revitalization_period = fields.Char(string='Revitalization Period')
 
     # BOO 
-    periode = fields.Float(string='Period')
+    periode = fields.Char(string='Period')
     # Supports #
     supervisor = fields.Char(string='Supervisor')
     engineer = fields.Char(string='Engineer')

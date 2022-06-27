@@ -28,6 +28,9 @@
                     </group>
                 </page>
                 <page string="Quotation BOO">
+                    <group>
+                        <field name="periode" />
+                    </group>
                     <group string="Supports">
                         <field name="supervisor" />
                         <field name="engineer" />
