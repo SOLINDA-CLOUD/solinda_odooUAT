@@ -122,7 +122,7 @@
                                     <div>
                                     Dear Sir,<br />
                                     <br />
-                                    We have the pleasure to offer you the below mentioned operation and maintenance services for Brackish Water Reverse Osmosis Capacity 300 CMD with the best price on terms and conditions <br />
+                                    We have the pleasure to offer you the below mentioned operation and maintenance services for <t t-esc="doc.items_oms.name"/> with the best price on terms and conditions <br />
                                     hereinafter set forth, as follow:</div>
                                 </td>
                             </tr>
@@ -168,13 +168,14 @@
                                                     <strong>TOTAL</strong>
                                                 </td>
                                                 <td style="width: 39.0316%; height: 36px; text-align: right; border: 1px solid black; border-bottom: 0px solid transparent;">
-                                                    <strong><t t-esc="doc.tax_totals_json"/></strong>
+                                                    <p><strong><t t-esc="doc.amount_total"/></strong></p>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 26.4244%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="2">Operations and Maintenance Supports</td>
                                                 <td style="width: 72.2745%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="3">
-                                                    - Supervisor (Zulpian and Ahmad Sabri)<br />- Office : Perumahan Puri Kampia Jl. Soka I no. A3
+                                                    <p>Supervisor : <t t-esc="doc.supervisor"/></p>
+                                                    <p>Office : <t t-esc="doc.office"/></p>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -182,10 +183,10 @@
                                                     Terms and Conditions
                                                 </td>
                                                 <td style="width: 72.2745%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="3">
-                                                    - Quotation Validity : 1 weeks<br />
-                                                    - Delivery Point : Shangri - La, The Maj, Nusa Dua<br />
-                                                    - Price : Include PPH 23, exclude VAT-10%<br />
-                                                    - Payment Terms : 10 days after Invoice received
+                                                    <p>Quotation Validity : <t t-esc="doc.quotation_validity"/></p>
+                                                    <p>Deliver Point : <t t-esc="doc.delivery_point"/></p>
+                                                    <p>Price : <t t-raw="doc.price_tnc"/></p>
+                                                    <p>Payment Terms : <t t-raw="doc.payment_terms"/></p>
                                                 </td>
                                             </tr>
                                         </tbody>
