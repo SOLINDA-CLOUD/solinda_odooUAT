@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
     payment_schedule_line_ids = fields.One2many('payment.schedule', 'order_id', string='Payment Schedule Line')
     deduct_dp = fields.Boolean('Deduct DP')
     
+    
     @api.onchange('payment_schedule_line_ids')
     def _onchange_payment_schedule_line_ids(self):
         total = sum(self.payment_schedule_line_ids.mapped('total_amount'))
