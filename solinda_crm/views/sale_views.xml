@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_view_form_inherit_sale" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Quotation OMS">
+                    <group string="Other Information">
+                        <field name="subject" />
+                        <field name="items_oms" />
+                        <field name="attn_id" />
+                        <field name="email" />
+                        <field name="supervisor" />
+                        <field name="office" />
+                    </group>
+                </page>
+                <page name="terms_conditions" string="Terms and Conditions">
+                    <group name="terms_conditions" string="Terms and Conditions">
+                        <field name="quotation_validity" />
+                        <field name="delivery_time" />
+                        <field name="delivery_point" />
+                        <field name="price_tnc" />
+                        <field name="payment_terms" />
+                        <field name="revitalization_period" />
+                    </group>
+                </page>
+            </xpath>            
+        </field>
+    </record>
+
+</odoo>

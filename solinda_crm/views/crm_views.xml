@@ -5,6 +5,15 @@
       <field name="model">crm.lead</field>
       <field name="inherit_id" ref="crm.crm_lead_view_form"/>
       <field name="arch" type="xml">
+        <xpath expr="//button[@name=%(crm.crm_lead_lost_action)d]" position="attributes">
+          <attribute name="attrs">{}</attribute>
+        </xpath>
+        <xpath expr="//button[@name='action_set_lost']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='date_deadline']" position="attributes">
+          <attribute name="attrs">{'required':[('type', '=', 'opportunity')]}</attribute>
+        </xpath>
         <xpath expr="//notebook" position="inside">
           <page string="Kuesioner">
             <group string="Type of business">
@@ -183,7 +192,22 @@
               <field name="other_issue" />
             </group>
           </page>
+          <page string="BOO">
+            <group string="Supports">
+              <field name="supervisor" />
+              <field name="engineer" />
+              <field name="office" />
+              <field name="operator" />
+            </group>
+            <group string="Responsibility">
+              <field name="president_director" />
+              <field name="director" />
+            </group>
+          </page>
         </xpath>
+        <field name="tag_ids" position="before">
+          <field name="periode"/>
+        </field>
       </field>
     </record>
   </data>

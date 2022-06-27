@@ -7,12 +7,6 @@ class SaleOrder(models.Model):
     _description = 'Sale Order'
     
     payment_schedule_line_ids = fields.One2many('payment.schedule', 'order_id', string='Payment Schedule Line')
-    quotation_validity = fields.Char(string = 'Quotation Validity')
-    delivery_time = fields.Char(string = 'Delivery Time')
-    delivery_point = fields.Char(string = 'Delivery Point')
-    price_tnc = fields.Html(string = 'Price')
-    payment_terms = fields.Html(string = 'Payment Terms')
-    revitalization_period = fields.Char(string = 'Revitalization Period')
     deduct_dp = fields.Boolean('Deduct DP')
     
     @api.onchange('payment_schedule_line_ids')

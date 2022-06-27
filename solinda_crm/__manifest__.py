@@ -20,14 +20,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','crm','mail'],
+    'depends': ['base','crm','sale','mail'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/views.xml',
+        'views/crm_views.xml',
+        'views/sale_views.xml',
         'views/mail_activity_type_view.xml',
-        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

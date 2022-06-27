@@ -34,16 +34,6 @@
             </group>
             <div class="oe_clear"/>
           </page>
-          <page name="terms_conditions" string="Terms and Conditions">
-            <group name="terms_conditions" string="Terms and Conditions">
-              <field name="quotation_validity" />
-              <field name="delivery_time" />
-              <field name="delivery_point" />
-              <field name="price_tnc" />
-              <field name="payment_terms" />
-              <field name="revitalization_period" />
-            </group>
-          </page>
         </notebook>
       </field>
     </record>

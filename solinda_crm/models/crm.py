@@ -119,7 +119,7 @@ class ExistingChemical(models.Model):
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
-    date_deadline = fields.Date('Expected Closing', required=True)
+    # date_deadline = fields.Date('Expected Closing', required=True)
     tag_ids = fields.Many2many('crm.tag', string='Tags', required=True)
 
     # Type of business
@@ -286,3 +286,16 @@ class CrmLead(models.Model):
     # Other issue / Other Concern
 
     other_issue = fields.Binary('Other Issue/Other Concern')
+
+    # BOO 
+    periode = fields.Float(string='Period')
+    
+    # Supports #
+    supervisor = fields.Char(string='Supervisor')
+    engineer = fields.Char(string='Engineer')
+    office = fields.Char(string='Office')
+    operator = fields.Char(string='Operator')
+
+    # Responsibilty Centre #
+    president_director = fields.Char('President Director')
+    director = fields.Char('Director')
