@@ -61,7 +61,7 @@
                         <t t-esc="doc.name"/>
                     </p>
                     <table style="table-layout: fixed; border-collapse: collapse; width: 100%; height: 144px;">
-                        <tbody style="font-size: 15px;">
+                        <tbody style="font-size: 13px;">
                             <tr style="height: 18px;">
                                 <td style="width: 9.51851%; height: 18px;">To</td>
                                 <td style="width: 1.97972%; height: 18px;">:</td>
@@ -120,84 +120,87 @@
                             <tr>
                                 <td style="text-align: left; width: 99.9997%;" colspan="7">
                                     <div>
-                                    Dear Sir,<br />
-                                    <br />
-                                    We have the pleasure to offer you the below mentioned operation and maintenance services for <t t-esc="doc.items_oms.name"/> with the best price on terms and conditions <br />
-                                    hereinafter set forth, as follow:</div>
+                                        Dear Sir,<br />
+                                        <br />
+                                        We have the pleasure to offer you the below mentioned operation and maintenance services for <t t-esc="doc.items_oms.name"/> with the best price on terms and conditions hereinafter set forth, as follow:
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="text-align: left; width: 99.9997%;" colspan="7">
                                     <table style="table-layout: fixed; border-collapse: collapse; width: 95%;" border="1">
-                                        <thead>
-                                            <tr>
-                                                <td style="width: 4.14635%; height: 36px; text-align: center; border: 1px solid black;">
-                                                    <strong>No</strong>
-                                                </td>
-                                                <td style="width: 44.5562%; height: 36px; text-align: center; border: 1px solid black;" colspan="2">
-                                                    <strong>Items</strong>
-                                                </td>
-                                                <td style="width: 10.9648%; height: 36px; text-align: center; border: 1px solid black;">
-                                                    <strong>Quantity</strong>
-                                                </td>
-                                                <td style="width: 39.0316%; height: 36px; text-align: center; border: 1px solid black;">
-                                                    <strong>Unit Price (Rp)</strong>
-                                                </td>
-                                            </tr>
-                                        </thead>
                                         <tbody>
                                             <tr>
-                                                <t t-foreach="doc.order_line" t-as="order">
-                                                    <td style="width: 4.14635%; text-align: center; vertical-align : top; border: 1px solid black;">
-                                                        <strong>1</strong>
+                                                <td style="width: 10%; text-align: center; border: 1px solid black">No</td>
+                                                <td style="width: 40%; text-align: center; border: 1px solid black">Item</td>
+                                                <td style="width: 25%; text-align: center; border: 1px solid black">Quantity</td>
+                                                <td style="width: 25%; text-align: center; border: 1px solid black">Unit Price (Rp)</td>
+                                            </tr>
+                                            <t t-set="no" t-value="1"/>
+                                            <t t-foreach="doc.order_line" t-as="order">
+                                                <tr>
+                                                    <td style="width: 10%; text-align: center; border: 1px solid black; border-bottom: 0px solid transparent">
+                                                        <t t-if="order.display_type">
+                                                            <t t-set="no" t-value=""/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="no"/>
+                                                        </t>
                                                     </td>
-                                                    <td style="width: 44.5562%; vertical-align : top; border: 1px solid black; padding-left:2px;" colspan="2">
+                                                    <td style="width: 40%; border: 1px solid black; border-bottom: 0px solid transparent">
                                                         <t t-esc="order.name"/>
                                                     </td>
-                                                    <td style="width: 10.9648%; text-align: center; vertical-align : top; border: 1px solid black;">
+                                                    <td style="width: 25%; text-align: center; border: 1px solid black; border-bottom: 0px solid transparent">
                                                         <t t-esc="order.product_uom.name"/>
                                                     </td>
-                                                    <td style="width: 39.0316%; text-align: right; vertical-align : top; border: 1px solid black;">
-                                                        <strong><t t-esc="order.price_unit"/></strong>
+                                                    <td style="width: 25%; text-align: center; border: 1px solid black; border-bottom: 0px solid transparent">
+                                                        <t t-if="order.display_type">
+                                                            <p> </p>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <t t-esc="order.price_unit"/>
+                                                        </t>
                                                     </td>
-                                                </t>
-                                            </tr>
+                                                </tr>
+                                            </t>
                                             <tr>
-                                                <td style="width: 4.14635%; height: 36px; border: 1px solid black; border-bottom: 0px solid transparent; border-right: 0px solid transparent;"></td>
-                                                <td style="width: 55.521%; height: 36px; text-align: right; border: 1px solid black; border-bottom: 0px solid transparent; border-left: 0px solid transparent;" colspan="3">
-                                                    <strong>TOTAL</strong>
-                                                </td>
-                                                <td style="width: 39.0316%; height: 36px; text-align: right; border: 1px solid black; border-bottom: 0px solid transparent;">
-                                                    <p><strong><t t-esc="doc.amount_total"/></strong></p>
+                                                <td style="width: 70%; text-align: right; border: 1px solid black" colspan="3">Total</td>
+                                                <td style="width: 25%; text-align: center; border: 1px solid black">
+                                                    <t t-esc="doc.amount_total"/>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 26.4244%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="2">Operations and Maintenance Supports</td>
-                                                <td style="width: 72.2745%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="3">
-                                                    <p>Supervisor : <t t-esc="doc.supervisor.name"/></p>
-                                                    <p>Office : <t t-esc="doc.office"/></p>
+                                                <td style="width: 35%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:5px;" colspan="2">
+                                                    <p>Operations and Maintenance Supports</p>
+                                                </td>
+                                                <td style="width: 65%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:5px;" colspan="2">
+                                                    <p>Supervisor : <t t-esc="doc.supervisor.name"/>
+                                                    </p>
+                                                    <p>Office : <t t-esc="doc.office"/>
+                                                    </p>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 26.4244%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="2">
+                                                <td style="width: 35%; border: 1px solid black; border-top: 0px solid transparent; padding-left:2px; padding-top:5px;" colspan="2">
                                                     Terms and Conditions
                                                 </td>
-                                                <td style="width: 72.2745%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="3">
-                                                    <p>Quotation Validity : <t t-esc="doc.quotation_validity"/></p>
-                                                    <p>Deliver Point : <t t-esc="doc.delivery_point"/></p>
-                                                    <p>Price : <t t-raw="doc.price_tnc"/></p>
-                                                    <p>Payment Terms : <t t-raw="doc.payment_terms"/></p>
+                                                <td style="width: 65%; border: 1px solid black; border-top: 0px solid transparent; padding-left:2px; padding-top:5px;" colspan="2">
+                                                    <p>Quotation Validity : <t t-esc="doc.quotation_validity"/>
+                                                    </p>
+                                                    <p>Deliver Point : <t t-esc="doc.delivery_point"/>
+                                                    </p>
+                                                    <p>Price : <t t-raw="doc.price_tnc"/>
+                                                    </p>
+                                                    <p>Payment Terms : <t t-raw="doc.payment_terms"/>
+                                                    </p>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </td>
-                            </tr>
+                            </tr>                                
                             <tr>
                                 <td style="text-align: left; width: 99.9997%;" colspan="7">For further information, please do not hesitate to contact us.</td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: left; width: 99.9997%; padding-top:20px;" colspan="7"></td>
                             </tr>
                             <tr>
                                 <td style="text-align: center; width: 49.6196%;" colspan="3">Best Regards,<br />
@@ -211,16 +214,6 @@
                                     </strong>
                                     <br />
                                     </span>President Director
-                                </td>
-                                <td style="text-align: center; width: 8.52077%;"></td>
-                                <td style="text-align: center; width: 41.8592%;" colspan="3"><br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <span style="text-decoration: underline;">
-                                    </span>
                                 </td>
                             </tr>
                         </tbody>
