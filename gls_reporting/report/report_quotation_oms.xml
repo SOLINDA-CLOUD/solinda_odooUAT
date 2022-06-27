@@ -248,7 +248,7 @@
                                 </li>
                                 <li t-if="doc.company_id.vat" class="list-inline-item">
                                     <t t-esc="(doc.company_id.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>
-                                    :<span t-esc="company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
+                                    :<span t-esc="doc.company_id.vat.replace(' ','\N{NO-BREAK SPACE}')"/>
                                 </li>
                             </ul>
                             <div name="financial_infos">
