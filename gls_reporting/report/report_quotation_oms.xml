@@ -85,7 +85,7 @@
                                 <td style="width: 7.85545%; height: 18px;">From</td>
                                 <td style="width: 1.97975%; height: 18px;">:</td>
                                 <td style="width: 32.0241%; height: 18px;">
-                                    <t t-esc="company.name"/>
+                                    <t t-esc="doc.company_id.name"/>
                                 </td>
                             </tr>
                             <tr style="height: 18px;">
@@ -111,7 +111,7 @@
                                 <td style="width: 7.85545%; height: 18px;">Subject</td>
                                 <td style="width: 1.97975%; height: 18px;">:</td>
                                 <td style="width: 32.0241%; height: 18px;">
-                                    <strong>Operational &amp; Monitoring Service BWRO</strong>
+                                    <t t-esc="doc.subject"/>
                                 </td>
                             </tr>
                             <tr style="height: 18px;">
@@ -147,26 +147,20 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td style="width: 4.14635%; text-align: center; vertical-align : top; border: 1px solid black;">
-                                                    <strong><t t-esc="no"/></strong>
-                                                </td>
-                                                <td style="width: 44.5562%; vertical-align : top; border: 1px solid black; padding-left:2px;" colspan="2">
-                                                    <!-- <strong>Operational and Monitoring Service for Brackish Reverse Osmosis Plant Capacity 970 CMD consist of :<br />
-                                                    </strong>- Antiscalant for RO Membrance<br />
-                                                    - pH Adjustment for RO Product<br />
-                                                    - Disinfectant for RO Product<br />
-                                                    - Cleaning agent Acid<br />
-                                                    - Cleaning agent Alkali<br />
-                                                    - Catridge filter for feed and CIP<br />
-                                                    - Cleaning Membrance Specialist<br />
-                                                    - One person operator (6 days a week)<br />
-                                                    - Water test every month</td> -->
-                                                <td style="width: 10.9648%; text-align: center; vertical-align : top; border: 1px solid black;">
-                                                    Per month
-                                                </td>
-                                                <td style="width: 39.0316%; text-align: right; vertical-align : top; border: 1px solid black;">
-                                                    <strong>43.000.000,-</strong>
-                                                </td>
+                                                <t t-foreach="doc.order_line" t-as="order">
+                                                    <td style="width: 4.14635%; text-align: center; vertical-align : top; border: 1px solid black;">
+                                                        <strong>1</strong>
+                                                    </td>
+                                                    <td style="width: 44.5562%; vertical-align : top; border: 1px solid black; padding-left:2px;" colspan="2">
+                                                        <t t-esc="order.name"/>
+                                                    </td>
+                                                    <td style="width: 10.9648%; text-align: center; vertical-align : top; border: 1px solid black;">
+                                                        <t t-esc="order.product_uom"/>
+                                                    </td>
+                                                    <td style="width: 39.0316%; text-align: right; vertical-align : top; border: 1px solid black;">
+                                                        <strong><t t-esc="order.price_unit"/></strong>
+                                                    </td>
+                                                </t>
                                             </tr>
                                             <tr>
                                                 <td style="width: 4.14635%; height: 36px; border: 1px solid black; border-bottom: 0px solid transparent; border-right: 0px solid transparent;"></td>
@@ -174,7 +168,7 @@
                                                     <strong>TOTAL</strong>
                                                 </td>
                                                 <td style="width: 39.0316%; height: 36px; text-align: right; border: 1px solid black; border-bottom: 0px solid transparent;">
-                                                    <strong>43.000.000,-</strong>
+                                                    <strong><t t-esc="doc.tax_totals_json"/></strong>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -182,7 +176,7 @@
                                                 <td style="width: 72.2745%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="3">
                                                     - Supervisor (Zulpian and Ahmad Sabri)<br />- Office : Perumahan Puri Kampia Jl. Soka I no. A3
                                                 </td>
-                                                </tr>
+                                            </tr>
                                             <tr>
                                                 <td style="width: 26.4244%; border: 1px solid black; border-bottom: 0px solid transparent; border-top: 0px solid transparent; padding-left:2px; padding-top:30px;" colspan="2">
                                                     Terms and Conditions
@@ -218,16 +212,14 @@
                                     </span>President Director
                                 </td>
                                 <td style="text-align: center; width: 8.52077%;"></td>
-                                <td style="text-align: center; width: 41.8592%;" colspan="3">Approved by,<br />
+                                <td style="text-align: center; width: 41.8592%;" colspan="3"><br />
                                     <br />
                                     <br />
                                     <br />
                                     <br />
                                     <br />
                                     <span style="text-decoration: underline;">
-                                    <strong>(....................................)<br />
-                                    </strong>
-                                    </span>......................................
+                                    </span>
                                 </td>
                             </tr>
                         </tbody>
