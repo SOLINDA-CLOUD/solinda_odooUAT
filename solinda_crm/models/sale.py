@@ -22,9 +22,9 @@ class SaleOrder(models.Model):
     # BOO 
     periode = fields.Char(string='Period')
     # Supports #
-    supervisor = fields.Char(string='Supervisor')
+    supervisor_boo = fields.Char(string='Supervisor')
     engineer = fields.Char(string='Engineer')
-    office = fields.Char(string='Office')
+    office_boo = fields.Char(string='Office')
     operator = fields.Char(string='Operator')
     # Responsibilty Centre #
     president_director = fields.Char('President Director')

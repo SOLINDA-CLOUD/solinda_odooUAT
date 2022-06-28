@@ -33,9 +33,9 @@
                         <field name="periode" />
                     </group>
                     <group string="Supports">
-                        <field name="supervisor" />
+                        <field name="supervisor_boo" />
                         <field name="engineer" />
-                        <field name="office" />
+                        <field name="office_boo" />
                         <field name="operator" />
                     </group>
                     <group string="Responsibility">
