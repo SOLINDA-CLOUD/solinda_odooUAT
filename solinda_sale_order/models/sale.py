@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
     payment_schedule_line_ids = fields.One2many('payment.schedule', 'order_id', string='Payment Schedule Line')
     deduct_dp = fields.Boolean('Deduct DP')
     
+    
     @api.onchange('payment_schedule_line_ids')
     def _onchange_payment_schedule_line_ids(self):
         total = sum(self.payment_schedule_line_ids.mapped('total_amount'))
@@ -57,51 +58,63 @@ class PaymentSchedule(models.Model):
             
             }
         else:
-            if self.order_id.deduct_dp:
-                if self.payment_type == 'termin':                
-                    seq = 10
-                    data_payment = []
-                    for payment in self.order_id.payment_schedule_line_ids:
-                        if payment.id != self.id:
-                            if payment.move_id:
-                                data_payment.append((0,0,{
-                                'sequence': seq + 10,
-                                'name': payment.name,
-                                'account_id': payment.account_id.id,
-                                'quantity': 1,
-                                'price_unit': -payment.total_amount,
-                                'analytic_account_id': self.order_id.analytic_account_id.id,
-                                'payment_schedule_ids': [(4, payment.id)]
-                            }))
-                            else:
-                                raise ValidationError("Cannot Processed because a payment schedule %s hasn't made an invoice yet"%payment.name)
-                        else:
+            # if self.order_id.deduct_dp:
+            if self.payment_type == 'termin':                
+                seq = 10
+                data_payment = []
+                amount_total = 0
+                for payment in self.order_id.payment_schedule_line_ids:
+                    if payment.id != self.id:
+                        if payment.move_id:
                             data_payment.append((0,0,{
-                            'sequence': 10,
-                            'name': self.name,
-                            'account_id': self.account_id.id,
+                            'sequence': seq + 10,
+                            'name': payment.name,
+                            'account_id': payment.account_id.id,
                             'quantity': 1,
-                            'price_unit': self.total_amount,
+                            'price_unit': -payment.total_amount,
                             'analytic_account_id': self.order_id.analytic_account_id.id,
-                            'payment_schedule_ids': [(4, self.id)]
-                            }))
-                            break                
-                    invoice_vals['invoice_line_ids'] = data_payment
-                    moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
-                else:
-                    invoice_vals['invoice_line_ids'] = [(0,0,{
+                            'payment_schedule_ids': [(4, payment.id)]
+                        }))
+                            amount_total += payment.total_amount
+                        else:
+                            raise ValidationError("Cannot Processed because a payment schedule %s hasn't made an invoice yet"%payment.name)
+                    else:
+                        amount_total += self.total_amount
+                        data_payment.append((0,0,{
                         'sequence': 10,
                         'name': self.name,
                         'account_id': self.account_id.id,
                         'quantity': 1,
-                        'price_unit': self.total_amount,
+                        # 'price_unit': self.total_amount,
+                        'price_unit': amount_total,
                         'analytic_account_id': self.order_id.analytic_account_id.id,
                         'payment_schedule_ids': [(4, self.id)]
-                    })]
-                    moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
-
+                        }))
+                        data_payment.append((0,0,{
+                        'sequence': 10,
+                        'name': "Project Cost",
+                        'account_id': self.order_id.project_id.project_cost_account_id.id,
+                        'quantity': 1,
+                        # 'price_unit': self.total_amount,
+                        'price_unit': amount_total * self.order_id.final_profit,
+                        'analytic_account_id': self.order_id.analytic_account_id.id,
+                        'payment_schedule_ids': [(4, self.id)]
+                        }))
+                        data_payment.append((0,0,{
+                        'sequence': 10,
+                        'name': "Project On Progress",
+                        'account_id': self.order_id.project_id.project_onprogress_account_id.id,
+                        'quantity': 1,
+                        # 'price_unit': self.total_amount,
+                        'price_unit': (amount_total * self.order_id.final_profit) * -1,
+                        'analytic_account_id': self.order_id.analytic_account_id.id,
+                        'payment_schedule_ids': [(4, self.id)]
+                        }))
+                        
+                        break                
+                invoice_vals['invoice_line_ids'] = data_payment
+                moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
             else:
-
                 invoice_vals['invoice_line_ids'] = [(0,0,{
                     'sequence': 10,
                     'name': self.name,
@@ -110,9 +123,22 @@ class PaymentSchedule(models.Model):
                     'price_unit': self.total_amount,
                     'analytic_account_id': self.order_id.analytic_account_id.id,
                     'payment_schedule_ids': [(4, self.id)]
-                    
                 })]
-                moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)
+                moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
+
+            # else:
+
+            #     invoice_vals['invoice_line_ids'] = [(0,0,{
+            #         'sequence': 10,
+            #         'name': self.name,
+            #         'account_id': self.account_id.id,
+            #         'quantity': 1,
+            #         'price_unit': self.total_amount,
+            #         'analytic_account_id': self.order_id.analytic_account_id.id,
+            #         'payment_schedule_ids': [(4, self.id)]
+                    
+            #     })]
+            #     moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)
                 
             self.write({'move_id': moves.id})
             return {

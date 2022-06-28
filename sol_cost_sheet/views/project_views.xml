@@ -6,6 +6,9 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
 
+                <field name="label_tasks" position="before">
+                    <field name="code" />
+                </field>
                 <field name="tag_ids" position="after">
                     <field name="rab_id" />
                     <field name="rap_id" readonly="1" />
@@ -14,6 +17,12 @@
 
                     <button string="Create RAP" name="create_rap" attrs="{'invisible':[('rab_id','=',False)]}" type="object"/>
                     <!-- <button string="Create RAP" name="create_rap" type="object" attrs="{'invisible':[('rab_id','=', False)]}"/> -->
+                </xpath>
+
+                <xpath expr="//group[@name='extra_settings']" position="inside">
+                    <field name="project_cost_account_id" />
+                    <field name="project_onprogress_account_id" />
+
                 </xpath>
 
             </field>

@@ -34,6 +34,22 @@
                         <field name="revitalization_period" />
                     </group>
                 </page>
+                <page string="Quotation BOO">
+                    <group>
+                        <field name="attn_id" />
+                        <field name="periode" />
+                    </group>
+                    <group string="Supports">
+                        <field name="supervisor_boo" />
+                        <field name="engineer" />
+                        <field name="office_boo" />
+                        <field name="operator" />
+                    </group>
+                    <group string="Responsibility">
+                        <field name="president_director" />
+                        <field name="director" />
+                    </group>
+                </page>
             </xpath>            
         </field>
     </record>

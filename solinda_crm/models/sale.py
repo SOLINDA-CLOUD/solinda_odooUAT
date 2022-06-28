@@ -25,3 +25,13 @@ class SaleOrder(models.Model):
     estimated_freight = fields.Float(string="Estimated Freight")
     ship_to = fields.Many2one('res.partner', string='Ship To')
     ship_address = fields.Char(related='ship_to.street', store=True)
+    # BOO 
+    periode = fields.Char(string='Period')
+    # Supports #
+    supervisor_boo = fields.Char(string='Supervisor')
+    engineer = fields.Char(string='Engineer')
+    office_boo = fields.Char(string='Office')
+    operator = fields.Char(string='Operator')
+    # Responsibilty Centre #
+    president_director = fields.Char('President Director')
+    director = fields.Char('Director')

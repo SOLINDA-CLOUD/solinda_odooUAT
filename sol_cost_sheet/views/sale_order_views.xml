@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
             <field name="opportunity_id" position="after">
                 <field name="rab_id" />
+                <field name="final_profit" widget="percentage" invisible="1" />
             </field>
 
         </field>

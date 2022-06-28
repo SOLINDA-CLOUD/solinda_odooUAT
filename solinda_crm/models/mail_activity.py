@@ -10,10 +10,9 @@ class MailActivity(models.Model):
     def action_feedback(self, feedback=False, attachment_ids=None):
         if self.res_model == 'crm.lead':
             crm_id = self.env[self.res_model].browse(self.res_id)
-            progress = self.activity_type_id.progress
+            progress = self.activity_type_id.progress * 100
             crm_id.probability += progress
-            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> MASOOOKK",self.res_id)
-            print(">>>>>>>>>>>>>>>>>>>",self.activity_type_id)
+            
         res = super().action_feedback(feedback=False, attachment_ids=None)
         
         return res
