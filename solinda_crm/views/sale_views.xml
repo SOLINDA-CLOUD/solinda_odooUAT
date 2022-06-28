@@ -29,6 +29,7 @@
                 </page>
                 <page string="Quotation BOO">
                     <group>
+                        <field name="attn_id" />
                         <field name="periode" />
                     </group>
                     <group string="Supports">
