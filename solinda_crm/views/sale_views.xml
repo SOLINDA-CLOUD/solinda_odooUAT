@@ -6,6 +6,13 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//notebook/page/group/group[@name='sale_shipping']" position="inside">
+                <field name="courier" />
+                <field name="fob" />
+                <field name="estimated_freight" />
+                <field name="ship_to" />
+                <field name="ship_address" />
+            </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Quotation OMS">
                     <group string="Other Information">

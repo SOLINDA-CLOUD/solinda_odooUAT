@@ -18,3 +18,10 @@ class SaleOrder(models.Model):
     price_tnc = fields.Html(string='Price')
     payment_terms = fields.Html(string='Payment Terms')
     revitalization_period = fields.Char(string='Revitalization Period')
+
+    # Additional Shipment
+    courier = fields.Char(string="Ship Via")
+    fob = fields.Char(string="FOB")
+    estimated_freight = fields.Float(string="Estimated Freight")
+    ship_to = fields.Many2one('res.partner', string='Ship To')
+    ship_address = fields.Char(related='ship_to.street', store=True)
