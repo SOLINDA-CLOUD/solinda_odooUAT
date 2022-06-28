@@ -160,7 +160,7 @@
                                                 <td style="width: 1.94013%; text-align: center;">-</td>
                                                 <td style="width: 19.5677%;">Terms and Conditions</td>
                                                 <td style="width: 1.94019%;">:</td>
-                                                <td style="width: 76.5521%;">- <t t-raw="doc.price_tnc"/>
+                                                <td style="width: 76.5521%;">- <span t-raw="doc.price_tnc"/>
                                                         - Quotation Validity : <t t-esc="doc.quotation_validity"/><br />
                                                         - Revitalization period : <t t-esc="doc.revitalization_period"/><br />
                                                         - Detail terms &amp; condition reffering to the contract</td>
