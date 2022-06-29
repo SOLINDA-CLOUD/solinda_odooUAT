@@ -5,11 +5,13 @@
       <field name="model">crm.lead</field>
       <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
       <field name="arch" type="xml">
-        <xpath expr="//div[hasclass('oe_kanban_content flex-grow-1')]" position="inside">
+        <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">
           <div>
               Probability : 
-            <t t-if="probability == 100.0">
-              <field name="probability" class="text-success"/>
+            <t t-if="record.probability.raw_value == 100.0">
+              <span class="text-success">
+                <field name="probability" />
+              </span>
 
             </t>
             <t t-else="">
