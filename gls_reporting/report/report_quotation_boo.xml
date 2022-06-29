@@ -173,9 +173,10 @@
                                     <td style="width: 19.5677%;">References</td>
                                     <td style="width: 1.94019%;">:</td>
                                     <td style="width: 76.5521%;">
-                                        <t t-set="sales" t-value="doc.env['sale.order'].search([('state','in',('sale','done'))])"/>
-                                        <t t-set="sales_filter" t-value="sales.filtered(lambda x: x.opportunity_id and x.opportunity_id.tag_ids.name in ('BOO'))"/>
-                                        <t t-foreach="sales_filter" t-as="res">
+                                        <t t-set="sales" t-value="doc.env['sale.order'].search([('state','in',('sale','done')),('opportunity_id.tags_ids.name','ilike','BOO')])"/>
+                                        <!-- <t t-set="sales_filter" t-value="sales.filtered(lambda x: x.opportunity_id and x.opportunity_id.tag_ids.name in ('BOO'))"/> -->
+                                        <!-- <t t-foreach="sales_filter" t-as="res"> -->
+                                        <t t-foreach="sales" t-as="res">
                                             <t t-out="'- %s'% res.partner_id.name"/>
                                         </t>
                                     </td>
