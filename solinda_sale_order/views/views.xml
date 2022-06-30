@@ -11,7 +11,8 @@
         <notebook position="inside">
           <page name="payment_schedule" string="Payment Schedule">
             <group>
-              <field name="deduct_dp" widget="boolean_toggle" class="oe_inline oe_edit_only" />
+              <!-- <field name="deduct_dp" widget="boolean_toggle" class="oe_inline oe_edit_only" /> -->
+              <field name="payment_scheme" />
             </group>
             <field name="payment_schedule_line_ids">
               <tree editable="bottom">

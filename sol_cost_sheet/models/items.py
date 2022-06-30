@@ -18,10 +18,11 @@ class Item(models.Model):
     component_id = fields.Many2one('component.component',ondelete="cascade")
     sequence = fields.Integer('Sequence')
     name = fields.Char('Description',copy=True)
+    project_id = fields.Many2one('project.project', related='rap_id.project_id',store=True)
     display_type = fields.Selection([
         ('line_section', "Section"),
         ('line_note', "Note")], default=False, help="Technical field for UX purpose.")
-    product_type = fields.Selection(related='product_id.detailed_type',store=True)
+    # product_type = fields.Selection(related='product_id.detailed_type',store=True)
     # qty_on_hand = fields.Float('Qty On Hand',related='product_id.qty_available')
     uom_id = fields.Many2one('uom.uom')
     product_qty = fields.Integer('Quantity',default=1,copy=True)

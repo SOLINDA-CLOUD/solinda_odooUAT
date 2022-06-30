@@ -9,7 +9,7 @@
                 <field name="label_tasks" position="before">
                     <field name="code" />
                 </field>
-                <field name="tag_ids" position="after">
+                <field name="label_tasks" position="after">
                     <field name="rab_id" />
                     <field name="rap_id" readonly="1" />
                 </field>

@@ -54,7 +54,7 @@
           <field name="rap_id" readonly="1" />
           <field name="product_id" readonly="1" />
           <field name="uom_id" readonly="1" />
-          <field name="product_type" readonly="1" />
+          <!-- <field name="product_type" readonly="1" /> -->
           <field name="product_qty" readonly="1" />
           <field name="category_id" readonly="1" />
           <field name="component_id" readonly="1" />

@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','sale','account_accountant','account_predictive_bills','sol_cost_sheet'],
+    'depends': ['base','sale','sol_cost_sheet'],
 
     # always loaded
     'data': [
