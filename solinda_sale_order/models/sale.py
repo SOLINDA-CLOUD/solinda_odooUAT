@@ -43,6 +43,7 @@ class PaymentSchedule(models.Model):
     total_amount = fields.Float(compute='_compute_total_amount', string='Total Amount')
     move_id = fields.Many2one('account.move',string="Invoice")
     move_line_id = fields.Many2many('account.move.line')
+    include_dp = fields.Boolean('Include DP')
     
     
     
@@ -59,7 +60,7 @@ class PaymentSchedule(models.Model):
                         'account_id':project.project_cost_account_id.id,
                         'quantity': 1,
                         # 'price_unit': self.total_amount,
-                        'price_unit': cost,
+                        'price_unit': cost * -1,
                         'analytic_account_id': self.order_id.analytic_account_id.id,
                         'payment_schedule_ids': [(4, self.id)]
                         }))
@@ -69,7 +70,7 @@ class PaymentSchedule(models.Model):
                         'account_id':project.project_onprogress_account_id.id,
                         'quantity': 1,
                         # 'price_unit': self.total_amount,
-                        'price_unit': cost * -1,
+                        'price_unit': cost,
                         'analytic_account_id': self.order_id.analytic_account_id.id,
                         'payment_schedule_ids': [(4, self.id)]
                         }))
@@ -89,6 +90,7 @@ class PaymentSchedule(models.Model):
             }
         else:
             # if self.order_id.deduct_dp:
+            list_dp = []
             project = self.order_id.project_ids[0] if self.order_id.project_ids else self.order_id.project_id
 
             if self.order_id.payment_scheme == 'deduct':
@@ -156,7 +158,21 @@ class PaymentSchedule(models.Model):
                     'payment_schedule_ids': [(4, self.id)]
                 })]
                 cost = self.total_amount * (1 - self.order_id.final_profit)
-                invoice_vals['invoice_line_ids'] += self._include_project_cost(project,cost)
+                if self.include_project_cost:
+                    invoice_vals['invoice_line_ids'] += self._include_project_cost(project,cost)
+                if self.include_dp:
+                    data_dp = self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type == 'dp')
+                    list_dp = [(0,0,{
+                        'sequence': 10,
+                        'name': dp.name,
+                        'account_id': dp.account_id.id,
+                        'quantity': 1,
+                        'price_unit': dp.total_amount,
+                        'analytic_account_id': dp.order_id.analytic_account_id.id,
+                        'payment_schedule_ids': [(4, dp.id)]})
+                    for dp in data_dp
+                    ]
+                    invoice_vals['invoice_line_ids'] += list_dp
                 moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
 
             self.write({'move_id': moves.id})
