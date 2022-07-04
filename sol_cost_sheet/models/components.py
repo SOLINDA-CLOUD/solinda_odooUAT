@@ -52,6 +52,7 @@ class ComponentComponent(models.Model):
                 'item_ids':[(0,0,{
                     'cost_sheet_id': self.cost_sheet_id.id,
                     'product_id': item.product_id.id,
+                    'name': item.product_id.display_name,
                     'uom_id': item.product_id.uom_id.id,
                     'category_id': self.category_id.id
                 }) for item in master[0].item_line_ids]
