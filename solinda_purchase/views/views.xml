@@ -7,14 +7,14 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='line_ids']/tree/field[@name='product_qty']" position="after">
           <field name="merk_recommended"/>
-        </xpath><xpath expr="//field[@name='line_ids']/tree/field[@name='qty_ordered']" position="after">
+        </xpath><xpath expr="//field[@name='line_ids']/tree/field[@name='schedule_date']" position="before">
           <field name="price_target"/>
         </xpath>
         <xpath expr="//field[@name='line_ids']/tree/field[@name='schedule_date']" position="after">
           <field name="date_plan_required"/>
         </xpath>
         <xpath expr="//field[@name='line_ids']/tree/field[@name='date_plan_required']" position="after">
-          <field name="delivery_location"/>
+          <field name="delivery_location_id"/>
         </xpath>
       </field>
     </record>
