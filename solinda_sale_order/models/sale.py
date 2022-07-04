@@ -14,11 +14,11 @@ class SaleOrder(models.Model):
     ], string='Payment Scheme')
     
     
-    @api.onchange('payment_schedule_line_ids')
-    def _onchange_payment_schedule_line_ids(self):
-        total = sum(self.payment_schedule_line_ids.mapped('total_amount'))
-        if total > self.amount_total:
-            raise ValidationError("Total in Payment Schedule is greater then total amount in sales")
+    # @api.onchange('payment_schedule_line_ids')
+    # def _onchange_payment_schedule_line_ids(self):
+    #     total = sum(self.payment_schedule_line_ids.mapped('total_amount'))
+    #     if total > self.amount_total:
+    #         raise ValidationError("Total in Payment Schedule is greater then total amount in sales")
     
     
 class PaymentSchedule(models.Model):
@@ -44,13 +44,27 @@ class PaymentSchedule(models.Model):
     move_id = fields.Many2one('account.move',string="Invoice")
     move_line_id = fields.Many2many('account.move.line')
     include_dp = fields.Boolean('Include DP')
+    include_termin = fields.Boolean('Include Termin')
+    percentage_based_on = fields.Selection([
+        ('bill', 'Bill'),
+        ('progress', 'Progress'),
+    ], string='Percentage Based On',default="bill")
+
     
     
     
-    @api.depends('order_id.amount_total','bill')
+    @api.depends('order_id.amount_total','bill','percentage_based_on','order_id.payment_scheme')
     def _compute_total_amount(self):
         for this in self:
-            this.total_amount = this.bill * this.order_id.amount_total
+            total_amount = 0
+            if this.percentage_based_on == 'bill':
+                total_amount = this.bill * this.order_id.amount_total
+            if this.percentage_based_on == 'progress':
+                total_amount = this.progress * this.order_id.amount_total
+            if this.payment_type in ('dp','retensi'):
+                total_amount = this.bill * this.order_id.amount_total
+                
+            this.total_amount = total_amount
     
     def _include_project_cost(self,project,cost):
         data_payment = []
@@ -99,7 +113,7 @@ class PaymentSchedule(models.Model):
                     data_payment = []
                     amount_total = 0
                     cost = 0
-                    for payment in self.order_id.payment_schedule_line_ids:
+                    for payment in self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type == 'termin'):
                         if payment.id != self.id:
                             if payment.move_id:
                                 data_payment.append((0,0,{
@@ -107,11 +121,11 @@ class PaymentSchedule(models.Model):
                                 'name': payment.name,
                                 'account_id': payment.account_id.id,
                                 'quantity': 1,
-                                'price_unit': -payment.total_amount,
+                                'price_unit': -payment.move_id.amount_total,
                                 'analytic_account_id': self.order_id.analytic_account_id.id,
                                 'payment_schedule_ids': [(4, payment.id)]
                             }))
-                                amount_total += payment.total_amount
+                                amount_total += payment.move_id.amount_total
                             else:
                                 raise ValidationError("Cannot Processed because a payment schedule %s hasn't made an invoice yet"%payment.name)
                         else:
@@ -122,17 +136,27 @@ class PaymentSchedule(models.Model):
                             'name': self.name,
                             'account_id': self.account_id.id,
                             'quantity': 1,
-                            # 'price_unit': self.total_amount,
-                            'price_unit': amount_total,
+                            'price_unit': self.total_amount,
+                            # 'price_unit': amount_total,
                             'analytic_account_id': self.order_id.analytic_account_id.id,
                             'payment_schedule_ids': [(4, self.id)]
                             }))
-                            
-                            
+                        
                             break    
                     if self.include_project_cost:
                         data = self._include_project_cost(project,cost)
                         data_payment += data
+                    for aditional_data in self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type in ('dp','retensi')):
+                        data_payment.append((0,0,{
+                                'sequence': 10,
+                                'name': aditional_data.name,
+                                'account_id': aditional_data.account_id.id,
+                                'quantity': 1,
+                                # 'price_unit': self.total_amount,
+                                'price_unit': aditional_data.total_amount * -1 if aditional_data.payment_type == 'dp' else (self.total_amount * aditional_data.bill) * -1,
+                                'analytic_account_id': self.order_id.analytic_account_id.id,
+                                'payment_schedule_ids': [(4, self.id)]
+                                }))
                     invoice_vals['invoice_line_ids'] = data_payment
                     moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
                 else:
@@ -167,7 +191,7 @@ class PaymentSchedule(models.Model):
                         'name': dp.name,
                         'account_id': dp.account_id.id,
                         'quantity': 1,
-                        'price_unit': dp.total_amount,
+                        'price_unit': dp.total_amount * -1,
                         'analytic_account_id': dp.order_id.analytic_account_id.id,
                         'payment_schedule_ids': [(4, dp.id)]})
                     for dp in data_dp
