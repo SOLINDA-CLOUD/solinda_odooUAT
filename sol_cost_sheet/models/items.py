@@ -64,7 +64,7 @@ class Item(models.Model):
     @api.depends('product_id')
     def _compute_existing_price(self):
         for this in self:
-            if this.product_id.product_type != 'service':
+            if this.product_id.detailed_type != 'service':
                 stock_valuation = this.product_id.stock_valuation_layer_ids.sorted(reverse=True)
             else:
                 stock_valuation = this.env['purchase.order.line'].search([('product_id', '=', this.product_id.id),('po_confirm_date', '<=', fields.Date.context_today())],order="po_confirm_date desc",limit=1)
