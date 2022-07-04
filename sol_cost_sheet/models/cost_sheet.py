@@ -103,8 +103,6 @@ class CostSheet(models.Model):
         res = super().create(vals)
         if not res.revisied:
             res.name = self.env["ir.sequence"].next_by_code("cost.sheet.seq")
-        else:
-            return res
         res.crm_id.rab_id = res.id
         return res 
     
