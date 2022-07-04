@@ -22,7 +22,7 @@ class Item(models.Model):
     display_type = fields.Selection([
         ('line_section', "Section"),
         ('line_note', "Note")], default=False, help="Technical field for UX purpose.")
-    # product_type = fields.Selection(related='product_id.detailed_type',store=True)
+    product_type = fields.Selection(related='product_id.detailed_type',store=True)
     # qty_on_hand = fields.Float('Qty On Hand',related='product_id.qty_available')
     uom_id = fields.Many2one('uom.uom')
     product_qty = fields.Integer('Quantity',default=1,copy=True)
