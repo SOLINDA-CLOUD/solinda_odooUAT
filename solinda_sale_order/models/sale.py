@@ -207,7 +207,7 @@ class PaymentSchedule(models.Model):
                     # ]
                     # invoice_vals['invoice_line_ids'] += list_dp
                     if not self.deduct_dp:
-                        cost = (self.total_amount + data_dp[0].total_amount) * (1 - self.order_id.final_profit)
+                        cost = self.total_amount * (1 - self.order_id.final_profit)
                     else:
                         cost = (self.total_amount + (data_dp[0].total_amount * -1)) * (1 - self.order_id.final_profit)
                         
