@@ -106,13 +106,13 @@ class PaymentSchedule(models.Model):
             # if self.order_id.deduct_dp:
             list_dp = []
             project = self.order_id.project_ids[0] if self.order_id.project_ids else self.order_id.project_id
-
+            data_payment = []
+            amount_total = 0
+            cost = 0
             if self.order_id.payment_scheme == 'deduct':
                 if self.payment_type == 'termin':                
                     seq = 10
-                    data_payment = []
-                    amount_total = 0
-                    cost = 0
+                    
                     for payment in self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type == 'termin'):
                         if payment.id != self.id:
                             if payment.move_id:
@@ -172,31 +172,54 @@ class PaymentSchedule(models.Model):
                     moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
             
             elif self.order_id.payment_scheme == 'normal':
-                invoice_vals['invoice_line_ids'] = [(0,0,{
-                    'sequence': 10,
-                    'name': self.name,
-                    'account_id': self.account_id.id,
-                    'quantity': 1,
-                    'price_unit': self.total_amount,
-                    'analytic_account_id': self.order_id.analytic_account_id.id,
-                    'payment_schedule_ids': [(4, self.id)]
-                })]
-                cost = self.total_amount * (1 - self.order_id.final_profit)
-                if self.include_project_cost:
-                    invoice_vals['invoice_line_ids'] += self._include_project_cost(project,cost)
+                
                 if self.include_dp:
                     data_dp = self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type == 'dp')
-                    list_dp = [(0,0,{
+                    invoice_vals['invoice_line_ids'] = [
+                    (0,0,{
                         'sequence': 10,
-                        'name': dp.name,
-                        'account_id': dp.account_id.id,
+                        'name': self.name,
+                        'account_id': self.account_id.id,
                         'quantity': 1,
-                        'price_unit': dp.total_amount * -1,
-                        'analytic_account_id': dp.order_id.analytic_account_id.id,
-                        'payment_schedule_ids': [(4, dp.id)]})
-                    for dp in data_dp
-                    ]
-                    invoice_vals['invoice_line_ids'] += list_dp
+                        'price_unit': self.total_amount + data_dp[0].total_amount,
+                        'analytic_account_id': self.order_id.analytic_account_id.id,
+                        'payment_schedule_ids': [(4, self.id)]
+                    }),
+                    (0,0,{
+                        'sequence': 10,
+                        'name': data_dp[0].name,
+                        'account_id': data_dp[0].account_id.id,
+                        'quantity': 1,
+                        'price_unit': data_dp[0].total_amount * -1,
+                        'analytic_account_id': data_dp[0].order_id.analytic_account_id.id,
+                        'payment_schedule_ids': [(4, data_dp[0].id)]
+                    })]
+                    # list_dp = [(0,0,{
+                    #     'sequence': 10,
+                    #     'name': dp.name,
+                    #     'account_id': dp.account_id.id,
+                    #     'quantity': 1,
+                    #     'price_unit': dp.total_amount * -1,
+                    #     'analytic_account_id': dp.order_id.analytic_account_id.id,
+                    #     'payment_schedule_ids': [(4, dp.id)]})
+                    # for dp in data_dp
+                    # ]
+                    # invoice_vals['invoice_line_ids'] += list_dp
+                    cost = (self.total_amount + data_dp[0].total_amount) * (1 - self.order_id.final_profit)
+                else:
+                    invoice_vals['invoice_line_ids'] = [(0,0,{
+                        'sequence': 10,
+                        'name': self.name,
+                        'account_id': self.account_id.id,
+                        'quantity': 1,
+                        'price_unit': self.total_amount,
+                        'analytic_account_id': self.order_id.analytic_account_id.id,
+                        'payment_schedule_ids': [(4, self.id)]
+                    })]
+                    cost = self.total_amount * (1 - self.order_id.final_profit)
+                if self.include_project_cost:
+                    invoice_vals['invoice_line_ids'] += self._include_project_cost(project,cost)
+                
                 moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
 
             self.write({'move_id': moves.id})
