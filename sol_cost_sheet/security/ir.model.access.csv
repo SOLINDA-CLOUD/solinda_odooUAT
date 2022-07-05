@@ -12,3 +12,4 @@ sol_cost_sheet.access_master_item,access_master_item,sol_cost_sheet.model_master
 sol_cost_sheet.access_master_item_line,access_master_item_line,sol_cost_sheet.model_master_item_line,base.group_user,1,1,1,1
 sol_cost_sheet.access_approval_approval,access_approval_approval,sol_cost_sheet.model_approval_approval,base.group_user,1,1,1,1
 sol_cost_sheet.access_approver_line,access_approver_line,sol_cost_sheet.model_approver_line,base.group_user,1,1,1,1
+sol_cost_sheet.access_rap_report_wizard,access_rap_report_wizard,sol_cost_sheet.model_rap_report_wizard,base.group_user,1,1,1,1

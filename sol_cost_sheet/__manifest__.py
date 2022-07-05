@@ -35,12 +35,13 @@
         'views/rap_views.xml',
         'views/approval_views.xml',
         'views/purchase_request_views.xml',
-        'views/menuitem.xml',
-        'views/sequence_data.xml',
-        'views/templates.xml',
+        'wizard/rap_report.xml',
         'report/report_quotation_turnkey.xml',
         'report/report_quotation_trading.xml',
         'report/action_report.xml',
+        'views/menuitem.xml',
+        'views/sequence_data.xml',
+        'views/templates.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
