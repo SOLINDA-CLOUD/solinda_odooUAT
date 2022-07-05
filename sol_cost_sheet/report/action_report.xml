@@ -62,6 +62,17 @@
             <field name="binding_model_id" ref="sol_cost_sheet.model_rap_rap"/>
             <field name="binding_type">report</field>
         </record>
+        <record id="action_rap_report" model="ir.actions.report">
+            <field name="name">RAP Report</field>
+            <field name="model">rap.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">sol_cost_sheet.rap_report_xlsx</field>
+            <field name="report_file">sol_cost_sheet.rap_report_xlsx</field>
+            <field name="print_report_name">'RAP Report'</field>
+            <field name="binding_model_id" ref="sol_cost_sheet.model_rap_report_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
 
 
 

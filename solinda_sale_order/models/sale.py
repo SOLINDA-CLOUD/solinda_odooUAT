@@ -49,6 +49,7 @@ class PaymentSchedule(models.Model):
         ('bill', 'Bill'),
         ('progress', 'Progress'),
     ], string='Percentage Based On',default="bill")
+    deduct_dp = fields.Boolean('Deduct DP')
 
     
     
@@ -205,7 +206,11 @@ class PaymentSchedule(models.Model):
                     # for dp in data_dp
                     # ]
                     # invoice_vals['invoice_line_ids'] += list_dp
-                    cost = (self.total_amount + data_dp[0].total_amount) * (1 - self.order_id.final_profit)
+                    if not self.deduct_dp:
+                        cost = self.total_amount * (1 - self.order_id.final_profit)
+                    else:
+                        cost = (self.total_amount + (data_dp[0].total_amount * -1)) * (1 - self.order_id.final_profit)
+                        
                 else:
                     invoice_vals['invoice_line_ids'] = [(0,0,{
                         'sequence': 10,
@@ -216,6 +221,7 @@ class PaymentSchedule(models.Model):
                         'analytic_account_id': self.order_id.analytic_account_id.id,
                         'payment_schedule_ids': [(4, self.id)]
                     })]
+                    
                     cost = self.total_amount * (1 - self.order_id.final_profit)
                 if self.include_project_cost:
                     invoice_vals['invoice_line_ids'] += self._include_project_cost(project,cost)
