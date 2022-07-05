@@ -28,10 +28,10 @@ class AccountMove(models.Model):
         for this in self:
             product = ''
             for lines in this.invoice_line_ids:
-                if ' (%s)' % label.get(lines.detailed_type) in product:
+                if '%s, ' % label.get(lines.detailed_type) in product:
                     continue
                 else:
-                    product += ' (%s)' % label.get(lines.detailed_type)
+                    product += '%s, ' % label.get(lines.detailed_type)
             this.product_type = product
 
     total_qty_received = fields.Integer(
@@ -45,7 +45,8 @@ class AccountMove(models.Model):
     product_type = fields.Text(compute='_compute_product_type', string='Product Type')
     detailed_type = fields.Selection([
         ('consu', 'Consumable'),
-        ('service', 'Service')], string='Product Type', default='consu', required=True,
+        ('service', 'Service'),
+        ('product', 'Storable Product')], string='Product Type', default='consu', required=True,
         help='A storable product is a product for which you manage stock. The Inventory app has to be installed.\n'
              'A consumable product is a product for which stock is not managed.\n'
              'A service is a non-material product you provide.')
