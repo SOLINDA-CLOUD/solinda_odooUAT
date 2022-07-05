@@ -1,3 +1,4 @@
+from itertools import product
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
@@ -21,6 +22,18 @@ class AccountMove(models.Model):
             this.total_qty_received = sum(
                 this.invoice_line_ids.mapped('qty_received_account'))
 
+    @api.depends('invoice_line_ids.detailed_type')
+    def _compute_product_type(self):
+        label = dict(self._fields['detailed_type'].selection)
+        for this in self:
+            product = ''
+            for lines in this.invoice_line_ids:
+                if ' (%s)' % label.get(lines.detailed_type) in product:
+                    continue
+                else:
+                    product += ' (%s)' % label.get(lines.detailed_type)
+            this.product_type = product
+
     total_qty_received = fields.Integer(
         compute='_compute_total_qty_received', string='Qty Received', store=True)
     invoice_line_ids = fields.One2many('account.move.line', 'move_id', string='Invoice lines',
@@ -29,6 +42,14 @@ class AccountMove(models.Model):
                                            ('exclude_from_invoice_tab', '=', False)],
                                        states={'draft': [('readonly', False)]})
 
+    product_type = fields.Text(compute='_compute_product_type', string='Product Type')
+    detailed_type = fields.Selection([
+        ('consu', 'Consumable'),
+        ('service', 'Service')], string='Product Type', default='consu', required=True,
+        help='A storable product is a product for which you manage stock. The Inventory app has to be installed.\n'
+             'A consumable product is a product for which stock is not managed.\n'
+             'A service is a non-material product you provide.')
+    
 
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
@@ -36,3 +57,6 @@ class AccountMoveLine(models.Model):
     purchase_line_id = fields.Many2one(
         'purchase.order.line', 'Purchase Order Line', ondelete='set null', index=True)
     qty_received_account = fields.Float(related='purchase_line_id.qty_received', store=True, string="Qty Received")
+    product_id = fields.Many2one(
+        'product.product', string='Product', ondelete='restrict')
+    detailed_type = fields.Selection(related='product_id.detailed_type', string='Product Type')
