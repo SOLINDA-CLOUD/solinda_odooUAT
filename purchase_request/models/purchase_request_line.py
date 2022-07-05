@@ -20,6 +20,10 @@ class PurchaseRequestLine(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "id desc"
 
+    ### ADDING CODE ###
+    project_code = fields.Char(string='Project Code')
+    budget_code = fields.Char(string='Budget Code')
+
     name = fields.Char(string="Description", tracking=True)
     product_uom_id = fields.Many2one(
         comodel_name="uom.uom",
