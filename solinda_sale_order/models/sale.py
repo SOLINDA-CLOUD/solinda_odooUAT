@@ -113,52 +113,24 @@ class PaymentSchedule(models.Model):
             if self.order_id.payment_scheme == 'deduct':
                 if self.payment_type == 'termin':                
                     seq = 10
-                    
+                    amount = self.total_amount
+                    dp_retensi = sum(self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type in ('dp','retensi')).mapped('total_amount'))
                     for payment in self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type == 'termin'):
                         if payment.id != self.id:
-                            if payment.move_id:
-                                data_payment.append((0,0,{
-                                'sequence': seq + 10,
-                                'name': payment.name,
-                                'account_id': payment.account_id.id,
-                                'quantity': 1,
-                                'price_unit': -payment.move_id.amount_total,
-                                'analytic_account_id': self.order_id.analytic_account_id.id,
-                                'payment_schedule_ids': [(4, payment.id)]
-                            }))
-                                amount_total += payment.move_id.amount_total
-                            else:
-                                raise ValidationError("Cannot Processed because a payment schedule %s hasn't made an invoice yet"%payment.name)
-                        else:
-                            amount_total += self.total_amount
-                            cost = amount_total * (1 - self.order_id.final_profit)
-                            data_payment.append((0,0,{
+                            amount -= payment.move_id.amount_total
+                    amount -= dp_retensi
+                    data_payment.append((0,0,{
                             'sequence': 10,
                             'name': self.name,
                             'account_id': self.account_id.id,
                             'quantity': 1,
-                            'price_unit': self.total_amount,
+                            'price_unit': amount,
                             # 'price_unit': amount_total,
                             'analytic_account_id': self.order_id.analytic_account_id.id,
                             'payment_schedule_ids': [(4, self.id)]
-                            }))
-                        
-                            break    
-                    if self.include_project_cost:
-                        data = self._include_project_cost(project,cost)
-                        data_payment += data
-                    for aditional_data in self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type in ('dp','retensi')):
-                        data_payment.append((0,0,{
-                                'sequence': 10,
-                                'name': aditional_data.name,
-                                'account_id': aditional_data.account_id.id,
-                                'quantity': 1,
-                                # 'price_unit': self.total_amount,
-                                'price_unit': aditional_data.total_amount * -1 if aditional_data.payment_type == 'dp' else (self.total_amount * aditional_data.bill) * -1,
-                                'analytic_account_id': self.order_id.analytic_account_id.id,
-                                'payment_schedule_ids': [(4, self.id)]
-                                }))
-                    invoice_vals['invoice_line_ids'] = data_payment
+                    }))
+                    data_payment += self._include_project_cost(project,amount * (1 - self.order_id.final_profit))
+                    invoice_vals['invoice_line_ids'] += data_payment
                     moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals)    
                 else:
                     invoice_vals['invoice_line_ids'] = [(0,0,{
@@ -195,21 +167,12 @@ class PaymentSchedule(models.Model):
                         'analytic_account_id': data_dp[0].order_id.analytic_account_id.id,
                         'payment_schedule_ids': [(4, data_dp[0].id)]
                     })]
-                    # list_dp = [(0,0,{
-                    #     'sequence': 10,
-                    #     'name': dp.name,
-                    #     'account_id': dp.account_id.id,
-                    #     'quantity': 1,
-                    #     'price_unit': dp.total_amount * -1,
-                    #     'analytic_account_id': dp.order_id.analytic_account_id.id,
-                    #     'payment_schedule_ids': [(4, dp.id)]})
-                    # for dp in data_dp
-                    # ]
-                    # invoice_vals['invoice_line_ids'] += list_dp
+                   
                     if self.deduct_dp:
                         cost = self.total_amount * (1 - self.order_id.final_profit)
                     else:
-                        cost = (self.total_amount + (data_dp[0].total_amount * -1)) * (1 - self.order_id.final_profit)
+                        # cost = (self.total_amount + (data_dp[0].total_amount * -1)) * (1 - self.order_id.final_profit)
+                        cost = self.total_amount * (1 - self.order_id.final_profit)
                         
                 else:
                     invoice_vals['invoice_line_ids'] = [(0,0,{
@@ -223,6 +186,7 @@ class PaymentSchedule(models.Model):
                     })]
                     
                     cost = self.total_amount * (1 - self.order_id.final_profit)
+                    
                 if self.include_project_cost:
                     invoice_vals['invoice_line_ids'] += self._include_project_cost(project,cost)
                 
@@ -252,3 +216,52 @@ class PaymentSchedule(models.Model):
     #         self.payment_date = self.order_id.date_order + relativedelta(days=days)
     #     else:
     #         self.payment_date = False
+    
+    
+    
+    
+    
+    # for payment in self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type == 'termin'):
+                    #     if payment.id != self.id:
+                    #         if payment.move_id:
+                    #         #     data_payment.append((0,0,{
+                    #         #     'sequence': seq + 10,
+                    #         #     'name': payment.name,
+                    #         #     'account_id': payment.account_id.id,
+                    #         #     'quantity': 1,
+                    #         #     'price_unit': -payment.move_id.amount_total,
+                    #         #     'analytic_account_id': self.order_id.analytic_account_id.id,
+                    #         #     'payment_schedule_ids': [(4, payment.id)]
+                    #         # }))
+                    #             amount_total += payment.move_id.amount_total
+                    #         else:
+                    #             raise ValidationError("Cannot Processed because a payment schedule %s hasn't made an invoice yet"%payment.name)
+                    #     else:
+                    #         amount_total += self.total_amount
+                    #         cost = amount_total * (1 - self.order_id.final_profit)
+                    #         data_payment.append((0,0,{
+                    #         'sequence': 10,
+                    #         'name': self.name,
+                    #         'account_id': self.account_id.id,
+                    #         'quantity': 1,
+                    #         'price_unit': self.total_amount,
+                    #         # 'price_unit': amount_total,
+                    #         'analytic_account_id': self.order_id.analytic_account_id.id,
+                    #         'payment_schedule_ids': [(4, self.id)]
+                    #         }))
+                        
+                    #         break    
+                    # if self.include_project_cost:
+                    #     data = self._include_project_cost(project,cost)
+                    #     data_payment += data
+                    # for aditional_data in self.order_id.payment_schedule_line_ids.filtered(lambda x : x.payment_type in ('dp','retensi')):
+                    #     data_payment.append((0,0,{
+                    #             'sequence': 10,
+                    #             'name': aditional_data.name,
+                    #             'account_id': aditional_data.account_id.id,
+                    #             'quantity': 1,
+                    #             # 'price_unit': self.total_amount,
+                    #             'price_unit': aditional_data.total_amount * -1 if aditional_data.payment_type == 'dp' else (self.total_amount * aditional_data.bill) * -1,
+                    #             'analytic_account_id': self.order_id.analytic_account_id.id,
+                    #             'payment_schedule_ids': [(4, self.id)]
+                    #             }))
