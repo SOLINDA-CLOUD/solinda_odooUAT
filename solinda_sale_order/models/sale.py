@@ -14,11 +14,13 @@ class SaleOrder(models.Model):
     ], string='Payment Scheme')
     
     
-    # @api.onchange('payment_schedule_line_ids')
-    # def _onchange_payment_schedule_line_ids(self):
-    #     total = sum(self.payment_schedule_line_ids.mapped('total_amount'))
-    #     if total > self.amount_total:
-    #         raise ValidationError("Total in Payment Schedule is greater then total amount in sales")
+    @api.onchange('payment_schedule_line_ids')
+    def _onchange_payment_schedule_line_ids(self):
+        # total = sum(self.payment_schedule_line_ids.mapped('total_amount'))
+        # if total > self.amount_total:
+        total = sum(self.payment_schedule_line_ids.mapped('bill'))
+        if total > 1:
+            raise ValidationError("Total in Payment Schedule is greater then total amount in sales")
     
     
 class PaymentSchedule(models.Model):
@@ -125,7 +127,6 @@ class PaymentSchedule(models.Model):
                             'account_id': self.account_id.id,
                             'quantity': 1,
                             'price_unit': amount,
-                            # 'price_unit': amount_total,
                             'analytic_account_id': self.order_id.analytic_account_id.id,
                             'payment_schedule_ids': [(4, self.id)]
                     }))
