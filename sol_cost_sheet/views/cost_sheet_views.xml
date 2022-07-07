@@ -42,22 +42,23 @@
               <!-- <field name="crm_id" />
               <field name="partner_id" />
               <field name="tax_id" /> -->
-              <field name="crm_id" required="1" options="{'no_create':True,'no_quick_create':True}" />
-              <field name="partner_id" options="{'no_create':True,'no_quick_create':True}" />
+              <field name="crm_id" attrs="{'readonly': [('state','!=','draft')]}" required="1" options="{'no_create':True,'no_quick_create':True}" />
+              <field name="partner_id" attrs="{'readonly': [('state','!=','draft')]}" options="{'no_create':True,'no_quick_create':True}" />
               <!-- <field name="rab_template_id" /> -->
-              <field name="date_document" />
-              <field name="tax_id" options="{'no_create':True,'no_quick_create':True}" />
+              <field name="date_document" attrs="{'readonly': [('state','!=','draft')]}"/>
+              <field name="tax_id" options="{'no_create':True,'no_quick_create':True}" attrs="{'readonly': [('state','!=','draft')]}"/>
               <!-- <field name="tax_ids" widget="many2many_tags" /> -->
-              <field name="user_id" readonly="1" />
-              <field name="cost_sheet_revision_id" attrs="{'invisible':[('revisied','=',False)]}" />
+              <field name="user_id" readonly="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+              <field name="cost_sheet_revision_id" attrs="{'invisible':[('revisied','=',False)],'readonly': [('state','!=','draft')]}" />
               <field name="rev" invisible="1" />
+              <field name="state" invisible="1" />
               <field name="revisied" invisible="1" />
 
 
             </group>
             <notebook>
               <page string="Category">
-                <field name="category_line_ids">
+                <field name="category_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
                   <tree editable="bottom">
                     <field name="sequence" widget="handle"/>
                     <field name="product_id" />
@@ -77,26 +78,26 @@
                     <field name="project_hse" />
                     <field name="car" />
                     <field name="financial_cost" string="Financial Cost" />
-                    <field name="bank_guarantee" />
-                    <field name="contigency" />
+                    <field name="bank_guarantee" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="contigency" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="waranty" />
-                    <field name="other_price" />
+                    <field name="other_price" attrs="{'readonly': [('state','!=','draft')]}"/>
                   </group>
                   <group col="1" string="Proportional %">
 
                     <field name="ga_project_percent" widget="percentage" nolabel="1"/>
-                    <field name="project_hse_percent" widget="percentage" nolabel="1"/>
-                    <field name="car_percent" widget="percentage" nolabel="1" />
+                    <field name="project_hse_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="car_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="financial_cost_percent" widget="percentage" nolabel="1"/>
                     <field name="bank_guarantee_percent" widget="percentage" nolabel="1"/>
-                    <field name="contigency_percent" widget="percentage" nolabel="1"/>
-                    <field name="waranty_percent" widget="percentage" nolabel="1" />
+                    <field name="contigency_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="waranty_percent" widget="percentage" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}"/>
                   </group>
 
                 </group>
                 <group name="note_group" col="6" class="mt-2 mt-md-0">
                   <group colspan="4">
-                    <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
+                    <field name="note" nolabel="1" placeholder="Terms and conditions..." attrs="{'readonly': [('state','!=','draft')]}"/>
                   </group>
                   <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
                     <field name="currency_id" invisible="1" />
@@ -104,13 +105,13 @@
                     <field name="subtotal_non_project" />
                     <field name="project_value" />
                     <field name="profit" />
-                    <field name="profit_propotional" widget="percentage" />
+                    <field name="profit_propotional" widget="percentage" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="sales" />
-                    <field name="offer_margin_percentage" widget="percentage" />
+                    <field name="offer_margin_percentage" widget="percentage" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="offer_margin" />
                     <field name="total_cost_with_margin" />
                     <field name="total_cost_round_up" />
-                    <field name="pph" />
+                    <field name="pph" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="pph_percent" widget="percentage" />
                     <field name="final_profit" />
                     <field name="final_profit_percent" widget="percentage" />
@@ -125,7 +126,7 @@
                 </group>
               </page>
               <page string="Component" groups="base.group_no_one">
-                <field name="component_line_ids">
+                <field name="component_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
                   <tree>
                     <field name="category_id" />
                     <field name="product_id" />
@@ -135,27 +136,27 @@
                       <field name="category_id" />
                       <field name="product_id" />
                     </group>
-                    <field name="item_ids" />
+                    <field name="item_ids"/>
                   </form>
                 </field>
               </page>
               <page string="Items" groups="base.group_no_one">
-                <field name="item_line_ids">
+                <field name="item_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
                   <tree>
-                    <field name="category_id" />
-                    <field name="product_id" />
+                    <field name="category_id"/>
+                    <field name="product_id"/>
                   </tree>
                   <form>
                     <group>
-                      <field name="category_id" />
-                      <field name="product_id" />
+                      <field name="category_id"/>
+                      <field name="product_id"/>
                     </group>
                   </form>
                 </field>
               </page>
 
               <page name="ga_project" string="GA Project">
-                <field name="ga_project_line_ids">
+                <field name="ga_project_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
                   <tree editable="bottom">
                     <field name="product_id" required="1" />
                     <field name="product_qty" />
@@ -169,7 +170,7 @@
               </page>
 
               <page name="waranty" string="Waranty">
-                <field name="waranty_line_ids">
+                <field name="waranty_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
                   <tree editable="bottom">
                     <field name="product_id" required="1" />
                     <field name="product_qty" />
@@ -177,29 +178,25 @@
                     <field name="rfq_price" />
                     <field name="total_price" />
                     <field name="remarks" />
-
                   </tree>
                 </field>
               </page>
 
               <page string="Additional Information">
                 <group string="Information">
-                  <field name="subject" />
-                  <field name="attn_id" />
+                  <field name="subject" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="attn_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                   <field name="phone" />
                   <field name="email" />
-
                 </group>
                 <group string="Terms And Conditions">
-                  <field name="quotation_validity" />
-                  <field name="delivery_time" />
-                  <field name="delivery_point" />
-                  <field name="toc_price" />
-                  <field name="payment_terms" />
-
+                  <field name="quotation_validity" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="delivery_time" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="delivery_point" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="toc_price" attrs="{'readonly': [('state','!=','draft')]}"/>
+                  <field name="payment_terms" attrs="{'readonly': [('state','!=','draft')]}"/>
                 </group>
               </page>
-
             </notebook>
 
           </sheet>
