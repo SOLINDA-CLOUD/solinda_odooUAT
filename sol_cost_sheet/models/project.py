@@ -1,15 +1,32 @@
 from random import random
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError, UserError
+
+class ProjectProjectStage(models.Model):
+    _inherit = 'project.project.stage'
+
+    is_closed = fields.Boolean('End of stage')    
+
+class ProjectTask(models.Model):
+    _inherit = 'project.task'
+    _description = 'Project Task'
+    
+    @api.onchange('stage_id')
+    def _onchange_stage_id(self):
+        for i in self:
+            if i.stage_id.is_closed and i.env.user.id != i.manager_id.id:
+                raise ValidationError("Only project manager can change stage into done!")
 
 class ProjectProject(models.Model):
     _inherit = 'project.project'
 
     
-    code = fields.Char('Project Code')
     rab_id = fields.Many2one('cost.sheet',related='sale_order_id.rab_id', string='RAB',store=True)
+    code = fields.Char('Project Code',related="sale_order_id.rab_id.project_code")
     rap_id = fields.Many2one('rap.rap', string='RAP')
     project_cost_account_id = fields.Many2one('account.account', string='Project Cost')
     project_onprogress_account_id = fields.Many2one('account.account', string='Project On Progress')
+
     # purchase_id = fields.Many2one('purchase.requisition', string='RAP')
 
     def create_rap(self):
@@ -54,3 +71,10 @@ class ProjectProject(models.Model):
             "res_model": "rap.rap",
             "res_id": rap.id
         }
+
+    @api.onchange('stage_id')
+    def _onchange_stage_id(self):
+        for i in self:
+            if i.stage_id.is_closed and i.env.user.id != i.user_id.id:
+                raise ValidationError("Only project manager can change stage into done!")
+
