@@ -5,6 +5,7 @@ class SaleOrder(models.Model):
     
     rab_id = fields.Many2one('cost.sheet',related='opportunity_id.rab_id', string='RAB', store=True)
     final_profit = fields.Float(related='rab_id.final_profit_percent',store=True)
+    project_code = fields.Char('Project Code',related="opportunity_id.project_code")
     
     def action_confirm(self):
         res = super().action_confirm()

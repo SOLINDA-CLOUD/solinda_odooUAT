@@ -30,7 +30,6 @@ class CostSheet(models.Model):
     waranty_line_ids = fields.One2many('waranty.waranty', 'cost_sheet_id', string='Waranty Line',copy=True)
     project_id = fields.Many2one('project.project')
     
-    
     subtotal = fields.Float(compute='_compute_subtotal', string='Subtotal',store=True)
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -86,8 +85,7 @@ class CostSheet(models.Model):
     delivery_point = fields.Char('Delivery Point')
     toc_price = fields.Html('Price')
     payment_terms = fields.Html('Payment Terms')
-    
-    
+    project_code = fields.Char('Project Code', related="crm_id.project_code")
     
     def action_print_quotation(self):
         return self.env.ref('sol_cost_sheet.report_quotation_turnkey_action').report_action(self)
@@ -95,9 +93,6 @@ class CostSheet(models.Model):
     def action_print_quotation_trading(self):
         return self.env.ref('sol_cost_sheet.report_quotation_trading_action').report_action(self)
     
-    
-    
-        
     @api.model
     def create(self, vals):
         res = super().create(vals)

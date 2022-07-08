@@ -41,6 +41,7 @@ class Item(models.Model):
     qty_po = fields.Integer(compute='_compute_qty_po', string='Qty on PO')
     # price_po = fields.Float(compute='_compute_qty_po', string='PO Price')
     price_po = fields.Float(compute='_compute_price_po', string='PO Price')
+    project_code = fields.Char('Project Code', related="cost_sheet_id.project_code")
     
     
     
@@ -150,7 +151,8 @@ class Item(models.Model):
                 'product_id': item.product_id.id,
                 'product_qty': item.product_qty,
                 'estimated_cost': item.rfq_price,
-                'item_id': item.id                
+                'item_id': item.id,
+                'project_code':item.project_code               
             }) for item in self]
         })
         

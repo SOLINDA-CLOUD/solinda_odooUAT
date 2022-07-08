@@ -14,6 +14,7 @@ class PurchaseRequest(models.Model):
     _inherit = 'purchase.request'
     
     qty_is_bigger = fields.Boolean(compute='_compute_qty_is_bigger', string='Qty Is Bigger')
+    project_code = fields.Char('Project Code')
     
     state = fields.Selection(selection_add=[
     ("to_approve", "Waiting Approval GM/PM"),
@@ -67,6 +68,7 @@ class PurchaseRequestLine(models.Model):
     qty_item = fields.Integer('Qty RAP',related='item_id.product_qty')
     reason_qty_different = fields.Text('Reason')
     product_qty_is_bigger = fields.Boolean(compute='_compute_product_qty_is_bigger', string='Product QTy IS Bigger')
+    project_code = fields.Char('Project Code',related="request_id.project_code")
     
     # @api.depends('')
     def _compute_product_qty_is_bigger(self):
