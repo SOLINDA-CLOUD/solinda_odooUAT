@@ -41,7 +41,7 @@ class Item(models.Model):
     qty_po = fields.Integer(compute='_compute_qty_po', string='Qty on PO')
     # price_po = fields.Float(compute='_compute_qty_po', string='PO Price')
     price_po = fields.Float(compute='_compute_price_po', string='PO Price')
-    project_code = fields.Char('Project Code', related="cost_sheet_id.project_code")
+    project_code = fields.Char('Project Code', related="rap_id.project_id.code")
     
     
     
