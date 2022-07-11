@@ -1,5 +1,6 @@
 import string
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError, UserError
 
 class BusinessType(models.Model):
     _name = 'business.type'
@@ -286,3 +287,17 @@ class CrmLead(models.Model):
     # Other issue / Other Concern
 
     other_issue = fields.Binary('Other Issue/Other Concern')
+
+    @api.onchange('stage_id')
+    def _onchange_stage_crmlead(self):
+        for i in self:
+            if i.env.user.employee_id.id != i.user_id.employee_id.parent_id.id:
+                raise ValidationError("Only salesperson manager's can change the stage!")
+
+
+    def write(self, vals):
+        for i in self:
+            if vals.get("stage_id"):
+                if i.user_id.employee_id.parent_id.id != i.env.user.employee_id.id:
+                    raise ValidationError("Only salesperson manager's can change the stage!")
+        return super(CrmLead, self).write(vals)
