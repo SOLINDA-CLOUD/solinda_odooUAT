@@ -70,7 +70,7 @@ class Item(models.Model):
             else:
                 stock_valuation = this.env['purchase.order.line'].search([('product_id', '=', this.product_id.id),('po_confirm_date', '<=', fields.Date.context_today(this))],order="po_confirm_date desc",limit=1)
             
-            cost = stock_valuation[0].unit_cost if stock_valuation else 0.0
+            cost = stock_valuation[0].price_unit if stock_valuation else 0.0
             this.existing_price = cost
             if not this.rfq_price:
                 this.rfq_price = cost
