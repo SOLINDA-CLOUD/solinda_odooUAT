@@ -258,6 +258,12 @@ class RabCategory(models.Model):
     input_manual = fields.Boolean('Adjust Manual')
     final_price  = fields.Float('Final Price',compute="_compute_final_price",inverse="_inverse_final_price")
     final_price_percentage = fields.Float('Final %')
+    state_rab = fields.Selection([
+        ('draft', 'Draft'),
+        ('submit', 'Submited'),
+        ('approved', 'Approved'),
+        ('reject', 'Rejected'),
+    ], string='Status',related='cost_sheet_id.state')
     
     def name_get(self):
         return [(i.id, "[%s] %s" % (i.cost_sheet_id.name,i.product_id.display_name)) for i in self]

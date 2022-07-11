@@ -279,15 +279,16 @@
             <group>
               <field name="cost_sheet_id" readonly="1" force_save="1" />
               <field name="product_id" readonly="1" force_save="1" />
+              <field name="state_rab" invisible="1"/>
             </group>
-            <field name="parent_component_line_ids" context="{'default_cost_sheet_id':parent.cost_sheet_id}">
+            <field name="parent_component_line_ids" context="{'default_cost_sheet_id':parent.cost_sheet_id}" attrs="{'readonly': [('state_rab','!=','draft')]}">
               <tree editable="bottom">
                 <field name="cost_sheet_id" readonly="1" force_save="1" />
                 <field name="product_id" />
                 <field name="product_qty" />
                 <field name="product_uom_category_id" invisible="1" />
                 <field name="uom_id" domain="[('category_id', '=', product_uom_category_id)]" />
-                <button name="action_view_items" type="object" icon="fa-pencil-square-o" />
+                <button name="action_view_items" type="object" icon="fa-pencil-square-o" attrs="{'column_invisible': [('parent.state_rab', '!=', 'draft')]}"/>
 
               </tree>
             </field>
