@@ -148,20 +148,19 @@ class Item(models.Model):
         # if items:
         #     raise ValidationError("""There are Product can't created purchase order because Qty on Hand is bigger or equal than Quantity:
         #     %s"""%items)
-        
-        if self[0].rap_id.state == 'waiting':
-            raise ValidationError("Cannot create Purchase Request because RAP with number %s is waiting for approval"%(self.rap_id.name))
-            
-        purchase = self.env['purchase.request'].create({
-            'project_code':self.project_code,           
-            'line_ids':[(0,0,{
-                'product_id': item.product_id.id,
-                'product_qty': item.product_qty,
-                'estimated_cost': item.rfq_price,
-                'item_id': item.id,
-                'project_code':item.project_code               
-                }) for item in self],
-        })
+        for i in self:
+            if i[0].rap_id.state == 'waiting':
+                raise ValidationError("Cannot create Purchase Request because RAP with number %s is waiting for approval"%(i.rap_id.name))
+            purchase = i.env['purchase.request'].create({
+                'project_code':i.project_code,           
+                'line_ids':[(0,0,{
+                    'product_id': item.product_id.id,
+                    'product_qty': item.product_qty,
+                    'estimated_cost': item.rfq_price,
+                    'item_id': item.id,
+                    'project_code':item.project_code               
+                    }) for item in self],
+            })
         
         return {
                 'name': 'Purchase Request',
