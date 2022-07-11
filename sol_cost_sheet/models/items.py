@@ -74,7 +74,10 @@ class Item(models.Model):
             this.existing_price = cost
             if not this.rfq_price:
                 this.rfq_price = cost
-    
+            else:
+                this.rfq_price = 0
+                
+
     @api.onchange('product_id')
     def onchange_product_id(self):
         if not self.product_id:

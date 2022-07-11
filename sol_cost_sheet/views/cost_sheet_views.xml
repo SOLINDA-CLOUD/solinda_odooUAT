@@ -77,7 +77,7 @@
                     <field name="ga_project" />
                     <field name="project_hse" />
                     <field name="car" />
-                    <field name="financial_cost" string="Financial Cost" />
+                    <field name="financial_cost" string="Financial Cost" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="bank_guarantee" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="contigency" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="waranty" />
