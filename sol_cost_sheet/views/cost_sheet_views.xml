@@ -52,7 +52,6 @@
               <field name="user_id" readonly="1" attrs="{'readonly': [('state','!=','draft')]}"/>
               <field name="cost_sheet_revision_id" attrs="{'invisible':[('revisied','=',False)],'readonly': [('state','!=','draft')]}" />
               <field name="rev" invisible="1" />
-              <field name="state" invisible="1" />
               <field name="revisied" invisible="1" />
 
 
