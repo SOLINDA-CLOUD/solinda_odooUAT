@@ -25,6 +25,7 @@ class ProjectProject(models.Model):
     rap_id = fields.Many2one('rap.rap', string='RAP')
     project_cost_account_id = fields.Many2one('account.account', string='Project Cost')
     project_onprogress_account_id = fields.Many2one('account.account', string='Project On Progress')
+
     # purchase_id = fields.Many2one('purchase.requisition', string='RAP')
 
     def write(self, vals):
@@ -33,6 +34,13 @@ class ProjectProject(models.Model):
                 if i.stage_id.is_closed and i.env.user.id != i.user_id.id:
                     raise ValidationError("Only project manager can change stage into done!")
         return super(ProjectProject, self).write(vals)
+
+
+    @api.onchange('stage_id')
+    def _onchange_stage_project_id(self):
+        for i in self:
+            if i.stage_id.is_closed and i.env.user.id != i.user_id.id:
+                raise ValidationError("Only project manager can change stage into done!")
 
 
     def create_rap(self):
