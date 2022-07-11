@@ -47,6 +47,7 @@
               <!-- <field name="rab_template_id" /> -->
               <field name="date_document" attrs="{'readonly': [('state','!=','draft')]}"/>
               <field name="tax_id" options="{'no_create':True,'no_quick_create':True}" attrs="{'readonly': [('state','!=','draft')]}"/>
+              <field name="project_code" invisible="0" readonly="1"/>
               <!-- <field name="tax_ids" widget="many2many_tags" /> -->
               <field name="user_id" readonly="1" attrs="{'readonly': [('state','!=','draft')]}"/>
               <field name="cost_sheet_revision_id" attrs="{'invisible':[('revisied','=',False)],'readonly': [('state','!=','draft')]}" />

@@ -35,7 +35,7 @@ class CsRAP(models.Model):
     currency_id = fields.Many2one('res.currency', string='currency',default=lambda self:self.env.company.currency_id.id)
     is_approver = fields.Boolean(compute='_compute_is_approver', string='Is Approver')
     reason = fields.Text('Note')
-    project_code = fields.Char('Project Code', related="crm_id.project_code")
+    project_code = fields.Char('Project Code', related="project_id.project_code")
     
     @api.model
     def create(self, vals):
