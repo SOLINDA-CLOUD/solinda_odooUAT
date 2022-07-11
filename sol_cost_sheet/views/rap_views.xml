@@ -12,6 +12,7 @@
                 <tree sample="1" create="0">
                     <field name="name" />
                     <field name="date_document" />
+                    <field name="partner_id"/>
                     <field name="user_id" />
                     <field name="currency_id" invisible="1" />
                     <!-- <field name="total_amount" widget="monetary" options="{'currency_field': 'currency_id'}" /> -->
