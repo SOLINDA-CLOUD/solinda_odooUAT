@@ -153,13 +153,14 @@ class Item(models.Model):
             raise ValidationError("Cannot create Purchase Request because RAP with number %s is waiting for approval"%(self.rap_id.name))
             
         purchase = self.env['purchase.request'].create({
+            'project_code':item.project_code,           
             'line_ids':[(0,0,{
                 'product_id': item.product_id.id,
                 'product_qty': item.product_qty,
                 'estimated_cost': item.rfq_price,
                 'item_id': item.id,
                 'project_code':item.project_code               
-            }) for item in self]
+                }) for item in self],
         })
         
         return {
