@@ -197,7 +197,7 @@
 
                                     <!-- ADDING -->
                                     <field name="project_code_id" />
-                                    <field name="budget_code_pr" />
+                                    <field name="budget_code_pr"/>
                                     
                                     <button
                                         name="action_show_details"
