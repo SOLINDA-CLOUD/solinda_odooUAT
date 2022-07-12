@@ -86,13 +86,13 @@
                                 <tr style="height: 18px;">
                                     <td style="width: 8%; height: 41px;">Ship To :</td>
                                     <td style="width: 20%; height: 41px; border: 1px solid black;">
-                                        <t t-esc="doc.picking_type_id"/>
+                                        <span t-field="doc.picking_type_id.warehouse_id"/>
                                     </td>
                                 </tr>
                                 <tr style="height: 18px;">
                                     <td style="width: 8%; height: 18px;"></td>
                                     <td style="width: 20%; height: 18px; border: 1px solid black;">
-                                        <t t-esc="doc.picking_type_id.default_location_dest_id"/>
+                                        <span t-field="doc.picking_type_id.default_location_dest_id"/>
                                     </td>
                                 </tr>
                             </tbody>
