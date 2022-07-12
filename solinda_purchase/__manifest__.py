@@ -29,6 +29,7 @@
         'report/report_action.xml',
         'report/report_rfq.xml',
         'report/report_rfq_internal.xml',
+        'report/report_po.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

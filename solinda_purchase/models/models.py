@@ -62,3 +62,13 @@ class PurchaseOrderLine(models.Model):
     _inherit ='purchase.order.line'
 
     project_code = fields.Char(string='Project Code')
+
+class PurchaseOrder(models.Model):
+    _inherit = 'purchase.order'
+
+    name = fields.Char(string='Order Reference')
+
+    @api.model
+    def create(self, vals):
+        vals['name'] = self.env['ir.sequence'].next_by_code('purchase.order.req')
+        return super(PurchaseOrder, self).create(vals)
