@@ -14,7 +14,8 @@ class ProjectTask(models.Model):
     @api.onchange('stage_id')
     def _onchange_stage_id(self):
         for i in self:
-            if i.stage_id.is_closed and i.env.user.id != i.manager_id.id:
+            # if i.stage_id.is_closed and i.env.user.id != i.manager_id.id:
+            if i.env.user.id != i.manager_id.id:
                 raise ValidationError("Only project manager can change stage into done!")
 
 class ProjectProject(models.Model):
@@ -31,7 +32,8 @@ class ProjectProject(models.Model):
     def write(self, vals):
         for i in self:
             if vals.get("stage_id"):
-                if i.stage_id.is_closed and i.env.user.id != i.user_id.id:
+                # if i.stage_id.is_closed and i.env.user.id != i.user_id.id:
+                if i.env.user.id != i.user_id.id:
                     raise ValidationError("Only project manager can change stage into done!")
         return super(ProjectProject, self).write(vals)
 
@@ -39,7 +41,8 @@ class ProjectProject(models.Model):
     @api.onchange('stage_id')
     def _onchange_stage_project_id(self):
         for i in self:
-            if i.stage_id.is_closed and i.env.user.id != i.user_id.id:
+            # if i.stage_id.is_closed and i.env.user.id != i.user_id.id:
+            if i.env.user.id != i.user_id.id:
                 raise ValidationError("Only project manager can change stage into done!")
 
 
