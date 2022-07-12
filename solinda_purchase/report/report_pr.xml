@@ -61,7 +61,7 @@
                                                     <td style="width: 50%; height: 10px; border: 1px solid black; border-bottom: 0px solid transparent; padding-left: 2px;">
                                                         <p>Project Name</p>
                                                     </td>
-                                                    <td style="width: 50%; height: 10px; border: 1px solid black; border-bottom: 0px solid transparent; padding-left: 2px;">test</td>
+                                                    <td style="width: 50%; height: 10px; border: 1px solid black; border-bottom: 0px solid transparent; padding-left: 2px;"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
