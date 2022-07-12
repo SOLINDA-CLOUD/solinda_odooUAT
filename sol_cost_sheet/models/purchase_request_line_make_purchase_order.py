@@ -5,12 +5,6 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
 
     project_code = fields.Char('Project Code')
 
-    def _prepare_purchase_order(self, picking_type, group_id, company, origin, code=False):
-        res = super(PurchaseRequestLineMakePurchaseOrder, self)._prepare_purchase_order(picking_type, group_id, company, origin, code=False)
-        res['project_code'] = code
-        return res
-
-
     def make_purchase_order(self):
         res = []
         purchase_obj = self.env["purchase.order"]
