@@ -1,4 +1,6 @@
 from odoo import _, api, fields, models
+from datetime import datetime
+
 
 class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
     _inherit = "purchase.request.line.make.purchase.order"
