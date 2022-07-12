@@ -7,8 +7,6 @@ from odoo import _, api, exceptions, fields, models
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
-    project_code_po = fields.Many2one('project.code.pr', string='Project Code')
-
     def _purchase_request_confirm_message_content(self, request, request_dict=None):
         self.ensure_one()
         if not request_dict:
@@ -99,6 +97,8 @@ class PurchaseOrder(models.Model):
 
 class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
+
+    project_code_po = fields.Many2one('project.code.pr', string='Project Code')
 
     purchase_request_lines = fields.Many2many(
         comodel_name="purchase.request.line",
