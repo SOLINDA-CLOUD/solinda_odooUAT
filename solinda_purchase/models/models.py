@@ -48,6 +48,16 @@ class PurchaseRequisitionLine(models.Model):
             self.product_uom_id = self.product_id.uom_id.id
             self.product_description_variants = product_description_variants
 
+class PoductProduct(models.Model):
+    _inherit = 'product.product'
+
+    type_pur = fields.Char(string='Type')
+    debit = fields.Char(string='Debit')
+    head = fields.Char(string='Head')
+    voltage = fields.Char(string='Voltage')
+    casing = fields.Char(string='Casing')
+    impeller = fields.Char(string='Impeller')
+
 class PurchaseOrderLine(models.Model):
     _inherit ='purchase.order.line'
 
