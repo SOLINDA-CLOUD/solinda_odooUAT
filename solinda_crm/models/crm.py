@@ -295,9 +295,9 @@ class CrmLead(models.Model):
                 raise ValidationError("Only salesperson manager's can change the stage!")
 
 
-    def write(self, vals):
-        for i in self:
-            if vals.get("stage_id"):
-                if i.user_id.employee_id.parent_id.id != i.env.user.employee_id.id:
-                    raise ValidationError("Only salesperson manager's can change the stage!")
-        return super(CrmLead, self).write(vals)
+    # def write(self, vals):
+    #     for i in self:
+    #         if vals.get("stage_id"):
+    #             if i.user_id.employee_id.parent_id.id != i.env.user.employee_id.id:
+    #                 raise ValidationError("Only salesperson manager's can change the stage!")
+    #     return super(CrmLead, self).write(vals)
