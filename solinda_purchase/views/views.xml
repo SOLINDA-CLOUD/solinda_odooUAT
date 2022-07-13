@@ -5,7 +5,7 @@
       <field name="model">purchase.requisition</field>
       <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
       <field name="arch" type="xml">
-        <field name="picking_type_id" position="after">
+        <field name="currency_id" position="after">
           <field name="name_project" />
         </field>
         <field name="name_project" position="after">
