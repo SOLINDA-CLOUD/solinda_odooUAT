@@ -130,7 +130,7 @@
                                         <t t-esc="doc.date_end"/>
                                     </td>
                                     <td style="width: 7.24618%; text-align: center; border: 1px solid black; padding-right: 3px;">
-                                        <t t-esc="doc.ordering_date"/>
+                                        <t t-esc="doc.date_plan_required"/>
                                     </td>
                                     <td style="width: 7.11416%; text-align: center; border: 1px solid black; padding-right: 3px;">
                                         <span t-field="line.delivery_location_id"/>
