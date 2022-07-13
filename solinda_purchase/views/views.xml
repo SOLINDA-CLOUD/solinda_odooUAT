@@ -5,6 +5,12 @@
       <field name="model">purchase.requisition</field>
       <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
       <field name="arch" type="xml">
+        <field name="picking_type_id" position="after">
+          <field name="name_project" />
+        </field>
+        <field name="name_project" position="after">
+          <field name="need_category" />
+        </field>
         <xpath expr="//field[@name='line_ids']/tree/field[@name='schedule_date']" position="before">
           <field name="price_target"/>
         </xpath><xpath expr="//field[@name='line_ids']/tree/field[@name='price_target']" position="before">
