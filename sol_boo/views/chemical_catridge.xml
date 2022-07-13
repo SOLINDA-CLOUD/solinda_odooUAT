@@ -74,7 +74,7 @@
             <field name="name">Chemical Catridge Report</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">chemical.catridge</field>
-            <field name="view_mode">pivot,graph,gantt</field>
+            <field name="view_mode">pivot,graph</field>
             <!-- <field name="domain">[('type','=', 'shift')]</field>
             <field name="context">{'default_type':'shift'}</field> -->
         </record>
