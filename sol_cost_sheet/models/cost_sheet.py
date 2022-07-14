@@ -78,6 +78,7 @@ class CostSheet(models.Model):
     attn_id = fields.Many2one('res.partner', string='Attn')
     phone = fields.Char(related='attn_id.phone', store=True)
     email = fields.Char(related='attn_id.email', store=True)
+    ref_turnkey = fields.Char(string='Ref')
     
     # Terms and Conditions
     quotation_validity = fields.Char('Quotation Validity')

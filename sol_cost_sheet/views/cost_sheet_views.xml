@@ -190,6 +190,7 @@
                   <field name="attn_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                   <field name="phone" />
                   <field name="email" />
+                  <field name="ref_turnkey" />
                 </group>
                 <group string="Terms And Conditions">
                   <field name="quotation_validity" attrs="{'readonly': [('state','!=','draft')]}"/>
