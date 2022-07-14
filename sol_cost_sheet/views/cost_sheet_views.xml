@@ -171,7 +171,7 @@
                 </field>
               </page>
 
-              <page name="waranty" string="Waranty">
+              <page name="waranty" string="Warranty">
                 <field name="waranty_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
                   <tree editable="bottom">
                     <field name="product_id" required="1" />

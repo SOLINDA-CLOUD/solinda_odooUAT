@@ -58,19 +58,19 @@ class CostSheet(models.Model):
     pph = fields.Float('PPh',copy=True)
     
     subtotal_non_project = fields.Float(compute='_compute_subtotal_non_project', string='Subtotal Non Project',store=True,copy=True)
-    project_value = fields.Float(compute='_compute_project_value', string='Project Value',store=True,copy=True)
+    project_value = fields.Float(compute='_compute_project_value', string='Project Cost',store=True,copy=True)
     profit = fields.Float(compute='_compute_profit', string='Profit',store=True,copy=True)
-    profit_propotional = fields.Float('Profit Propotional')
-    sales = fields.Float(compute='_compute_sales', string='Sales',store=True,copy=True)
+    profit_propotional = fields.Float('Profit %')
+    sales = fields.Float(compute='_compute_sales', string='Project Cost + Profit',store=True,copy=True)
     offer_margin = fields.Float(compute='_compute_offer_margin', string='Offer Margin',store=True,copy=True)
     offer_margin_percentage = fields.Float('Offer Margin %')
     total_cost_with_margin = fields.Float('Total Cost + Offer Margin',compute="_compute_total_amount",store=True,copy=True)
-    total_cost_round_up = fields.Float('Round Up',compute="_compute_total_amount",store=True,copy=True)
+    total_cost_round_up = fields.Float('Sales (Round Up)',compute="_compute_total_amount",store=True,copy=True)
     
     pph_percent = fields.Float('PPh %',compute="_compute_total_amount",store=True,copy=True)
     final_profit = fields.Float('Final Profit',compute="_compute_total_amount",store=True,copy=True)
     final_profit_percent = fields.Float('Final Profit %',compute="_compute_total_amount",store=True,copy=True)
-    taxes = fields.Float('Vat',compute="_compute_total_amount",store=True,copy=True)
+    taxes = fields.Float('VAT',compute="_compute_total_amount",store=True,copy=True)
     total_amount = fields.Float(compute='_compute_total_amount', string='Total Amount',store=True,copy=True)
     
     # Other Information
