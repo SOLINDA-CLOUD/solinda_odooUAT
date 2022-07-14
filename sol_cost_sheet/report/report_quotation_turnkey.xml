@@ -253,7 +253,7 @@
                                                 </td>
                                                 <td style="width: 20%; height: 20px; text-align: right; border: 1px solid black; padding-top:7px; padding-right:5px;">
                                                     <strong>
-                                                        <t t-esc="doc.total_cost_round_up + doc.taxes" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
+                                                        <t t-esc="doc.total_cost_round_up" t-options="{'widget': 'monetary','display_currency': res_company.currency_id}"/>
                                                     </strong>
                                                 </td>
                                             </tr>
