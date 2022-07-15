@@ -171,7 +171,7 @@
                 </field>
               </page>
 
-              <page name="waranty" string="Waranty">
+              <page name="waranty" string="Warranty">
                 <field name="waranty_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
                   <tree editable="bottom">
                     <field name="product_id" required="1" />
@@ -190,6 +190,7 @@
                   <field name="attn_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                   <field name="phone" />
                   <field name="email" />
+                  <field name="ref_turnkey" />
                 </group>
                 <group string="Terms And Conditions">
                   <field name="quotation_validity" attrs="{'readonly': [('state','!=','draft')]}"/>

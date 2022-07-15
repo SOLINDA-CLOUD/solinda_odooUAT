@@ -6,6 +6,14 @@ from odoo import models, fields, api
 class PurchaseRequisition(models.Model):
     _inherit = 'purchase.requisition'
 
+    name_project = fields.Char(string='Name Project')
+    need_category = fields.Selection([
+        ('project', 'Project'),
+        ('operational', 'Operational'),
+        ('maintenance', 'Maintenance'),
+        ('trading', 'Trading'),
+        ('bidding', 'Bidding')
+    ], string='Need Category')
     
     @api.model
     def create(self, vals):
@@ -34,17 +42,17 @@ class PurchaseRequisitionLine(models.Model):
             # if self.product_id.code:
             #     product_description_variants = "[{}] {}".format(self.product_id.default_code, product_description_variants)
             if self.product_id.type_pur:
-                product_description_variants += "type : " + self.product_id.type_pur
+                product_description_variants += "type : " + self.product_id.type_pur + ";"
             if self.product_id.debit:
-                product_description_variants += "\n" + "debit : " + self.product_id.debit
+                product_description_variants += "\n" + "debit : " + self.product_id.debit + ";"
             if self.product_id.head:
-                product_description_variants += "\n" + "head : " + self.product_id.head
+                product_description_variants += "\n" + "head : " + self.product_id.head + ";"
             if self.product_id.voltage:
-                product_description_variants += "\n" + "voltage : " + self.product_id.voltage
+                product_description_variants += "\n" + "voltage : " + self.product_id.voltage + ";"
             if self.product_id.casing:
-                product_description_variants += "\n" + "material casing : " + self.product_id.impeller
+                product_description_variants += "\n" + "material casing : " + self.product_id.impeller + ";"
             if self.product_id.impeller:
-                product_description_variants += "\n" + "material impeller : " + self.product_id.casing
+                product_description_variants += "\n" + "material impeller : " + self.product_id.casing + ";"
             self.product_uom_id = self.product_id.uom_id.id
             self.product_description_variants = product_description_variants
 
