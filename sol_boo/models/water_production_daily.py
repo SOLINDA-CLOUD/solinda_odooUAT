@@ -53,7 +53,7 @@ class ShutdownSystem(models.Model):
                 job_order = self.env["job.order.request"].create({
                             'state': 'draft',
                             'warehouse_id': i.warehouse_id.id,
-                            'problem': i.name,
+                            'problem': i.notes,
                             })
                 if job_order:
                     i.job_order_id = job_order.id

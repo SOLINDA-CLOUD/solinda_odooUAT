@@ -59,10 +59,10 @@ class JobOrderRequest(models.Model):
                 if maintenance:
                     i.maintenance_id = maintenance.id
                     return {
-                    'name': 'Job Order Request',
+                    'name': 'Maintenance Request',
                     'type': 'ir.actions.act_window',
                     'view_mode': 'form',
-                    'res_model': 'job.order.request',
+                    'res_model': 'maintenance.request',
                     'res_id': maintenance.id,
                     }
 
